@@ -21,15 +21,3 @@ if(($file = fopen("airports.csv","r")) !== false){
 else die('unable to get companies');
 
 $rss = parse("http://www.kayak.com/h/rss/buzz?code=".$airports[0]."&tm=".date("Ym"));
-
-echo "<pre>";
-echo $rss;
-echo "</pre>";
-
-
-/*
-foreach($airports as $airport){
-	$xml = simplexml_load_file("http://www.kayak.com/h/rss/buzz?code=".$airport);
-	echo $xml;
-}
-*/
