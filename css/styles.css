@@ -4,3 +4,90 @@
 
 html, body {
 }
+
+body * {
+    font-family:'futura-pt';
+    font-size:16px;
+}
+
+.container {
+    width:960px;
+}
+
+.logo {
+    font-size:48px;
+    font-weight:bold;
+    display:inline-block;
+    color:#007236;
+    font-family:'futura-pt', 'helvetica', sans-serif;
+}
+
+.slogan {
+    display:inline-block;
+    font-size:24px;
+    margin-left:8px;
+    color:#004521;
+    font-family:'futura-pt', 'helvetica', sans-serif;
+}
+
+.explanation {
+    font-size:16px;
+    font-weight:normal;
+    font-family:'helvetica';
+    display:inline-block;
+}
+
+.left {
+    float:left;
+}
+
+.right {
+    float:right;
+}
+
+.drop-down {
+    font-weight:bold;
+    font-family:'helvetica';
+    font-size:inherit;
+    padding:4px 8px;
+    margin-left:4px;
+    border:1px solid #fcfcfc;
+    background-color:#f0f0f0;
+    border-radius:5px;  
+    cursor:pointer;
+}
+
+.deal-box {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
+.deal {
+    height:240px;
+    display:block;
+    background-size:cover;
+    background-position:center center;
+    position:relative;
+}
+
+.border-wrapper {
+    border:5px solid rgba(0,0,0,.1);
+    display:block;
+}
+
+.destination {
+    position:absolute;
+    bottom:0;
+    padding:10px 25px;
+    background-color:rgba(0,0,200,.6);
+    color:#fff;
+    font-weight:bold;
+    right:0;
+}
+
+.when {
+    color:#eee;
+    font-weight:normal;
+    font-family:helvetica;
+    font-size:12px;
+}
