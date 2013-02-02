@@ -57,6 +57,11 @@ body * {
     cursor:pointer;
 }
 
+#dropdown-cities ul {
+    overflow-y:scroll;
+    max-height:400px;
+}
+
 .deal-box {
     margin-top:10px;
     margin-bottom:10px;
@@ -74,6 +79,26 @@ body * {
     background-position:center center;
     position:relative;
 }
+
+
+.deal-box.large {
+    margin-top:10px;
+    margin-bottom:10px;
+    cursor:pointer;
+}
+
+.deal-box.large:hover .border-wrapper {
+    border:5px solid rgba(0,0,200,.2);
+}
+
+.deal.large {
+    height:372px;
+    display:block;
+    background-size:cover;
+    background-position:center center;
+    position:relative;
+}
+
 
 .border-wrapper {
     border:5px solid rgba(0,0,200,.1);

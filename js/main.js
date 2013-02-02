@@ -39,7 +39,7 @@ $.extend(TRIP, {
 		query.find({
 			success: function(results) {
 				if (results && results.length > 0)
-					$('#dropdown-button').html(results[0].get("city"));
+					$('#dropdown-button').prepend(results[0].get("city") + ", " + results[0].get("state") + " ");
 			},
 			error: function(results) {
 			    alert("Error: " + error.code + " " + error.message);
@@ -52,28 +52,19 @@ $.extend(TRIP, {
 	appendDeal: function(flight, styleName) {
 
       	var imgUrl = flight.get("destImage"),
-      		HTML0 = "<div class='deal-box grid_3'><div class=border-wrapper><div class=deal style='background-image:url(",
-			HTML1 = ");'> <div class=destination>",
-			HTML2 = "<br /><div class=price>",
-			HTML3 = "</div></div></div></div></div>",
 			startDate = TRIP.parseDate(flight.get("departDate")),
 			returnDate = TRIP.parseDate(flight.get("returnDate")),
 			numDays = TRIP.daydiff(startDate,returnDate);
 
 		var html = template({
 			destination: TRIP.locationString(flight.get("destLocation")), 
-			bg: "http://www.travelwizard.com/fiji/media/wadigibeach.jpg",
+			bg: flight.get("destImage"),
 			num_nights: numDays,
 			leaving: flight.get("departDate"),
 			price: flight.get("price"),
 			old_price: parseInt(flight.get("price"))+100
 		})
 		$('.deals').append(html);
-/*		$('.deals').append(
-  			HTML0 + imgUrl +
-  			HTML1 + numDays + " nights in " + TRIP.locationString(flight.get("destLocation")) +
-  			HTML2 + "$" + flight.get("price") + " leaving " + flight.get("departDate") + HTML3
-	  	); */
 	},
 	getDeals: function() {
 		var Deals = Parse.Object.extend("Deals"),
@@ -108,20 +99,24 @@ $.extend(TRIP, {
 		})
 	},
 	initIsotope: function() {
-		$('#container').isotope({
-		  // options
-		  itemSelector : '.item',
-		  layoutMode : 'fitRows'
-		});
+		// var $container = $('#isotope_div');
+		// $container.isotope({
+		//   // options
+		//   itemSelector : '.deal-box',
+		//   layoutMode : 'fitRows'
+		// });
+      
+  //     // change size of clicked element
+  //     $container.delegate( '.deal-box', 'click', function(){
+  //       $(this).toggleClass('large');
+  //       $container.isotope('reLayout');
+  //     });
+
+
 	}
 });
-
-$(function() {
-     // Same as $(document).ready(function {}). TIL
-     TRIP.setLocale();
-     TRIP.getDeals();
-     TRIP.getCities();
-     TRIP.initIsotope();
-
-
+ TRIP.setLocale();
+ TRIP.getDeals();
+ TRIP.getCities();
+ TRIP.initIsotope();
 });	
