@@ -12,6 +12,17 @@ function parse($url) {
 		return $json;
 }
 
+function date_compare($a, $b)
+{
+    $a = $a[departDate];
+    $b = $b[departDate];
+    $a = preg_replace('\/', '', $a);
+    $b = preg_replace('\/', '', $b);
+    return ($a < $b);
+}
+
+
+
 $airports = array();
 if(($file = fopen("airports.csv","r")) !== false){
 	while($data = fgetcsv($file)){
@@ -20,4 +31,6 @@ if(($file = fopen("airports.csv","r")) !== false){
 }
 else die('unable to get companies');
 
-$rss = parse("http://www.kayak.com/h/rss/buzz?code=".$airports[0]."&tm=".date("Ym"));
+$rss = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airports[0]."&tm=".date("Ym")));
+uksort($rss, "date_compare");
+print json_encode($rss);
