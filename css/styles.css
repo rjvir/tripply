@@ -57,8 +57,12 @@ body * {
     cursor:pointer;
 }
 
+.deal-box {
+    margin-top:10px;
+    margin-bottom:10px;
+}
+
 .deal {
-    margin-top:20px;
     height:240px;
     display:block;
     background-size:cover;
@@ -66,8 +70,9 @@ body * {
     position:relative;
 }
 
-.deal-wrapper {
-    border:4px solid #ccc;
+.border-wrapper {
+    border:5px solid rgba(0,0,0,.1);
+    display:block;
 }
 
 .destination {
