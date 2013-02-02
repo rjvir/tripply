@@ -1,6 +1,7 @@
 @import url('reset.css');
 @import url('text.css');
 @import url('960.css');
+@import url('isotope.css');
 
 html, body {
 }
@@ -91,8 +92,8 @@ body * {
     border:5px solid rgba(0,0,200,.2);
 }
 
-.deal.large {
-    height:372px;
+.deal-box.large .deal {
+    height:460px;
     display:block;
     background-size:cover;
     background-position:center center;
@@ -139,6 +140,7 @@ body * {
     text-align:right;
     display:inline-block;
     position:relative;
+    text-decoration: line-through;
 }
 
 .strike-through {
@@ -147,4 +149,10 @@ body * {
     background-color:#ddd;
     position:absolute;
     top:9px;
+}
+
+.deals-container {
+    position:relative;
+    margin:0 auto;
+    width:960px;
 }

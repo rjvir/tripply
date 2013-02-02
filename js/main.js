@@ -62,9 +62,9 @@ $.extend(TRIP, {
 			num_nights: numDays,
 			leaving: flight.get("departDate"),
 			price: flight.get("price"),
-			old_price: parseInt(flight.get("price"))+100
+			old_price: parseInt(1.4*flight.get("price"))
 		})
-		$('.deals').append(html);
+		$('.deals-container').append(html);
 	},
 	getDeals: function() {
 		var Deals = Parse.Object.extend("Deals"),
@@ -76,6 +76,7 @@ $.extend(TRIP, {
 		  	$.each(results, function() {
 		  		TRIP.appendDeal(this);
 		  	});
+
 		  },
 		  error: function(error) {
 		    alert("Error: " + error.code + " " + error.message);
@@ -92,6 +93,20 @@ $.extend(TRIP, {
 		  		$.each(results, function() {
 			  		TRIP.appendToDropdown(this);
 			  	});
+
+				$('.deals-container').isotope({
+				  // options
+				  itemSelector : '.deal-box',
+				  layoutMode : 'fitRows'
+				});
+				 $('.deal-box').click(function(){
+				 	$(this).removeClass('grid_4').addClass('grid_8').addClass('large');
+				 	$('.deals-container').isotope('reLayout');
+				 	//console.log('yo yo yo');
+				 	//console.log(this);
+				 	
+				 })
+
 			},
 			error: function(results) {
 			    alert("Error: " + error.code + " " + error.message);
@@ -119,4 +134,5 @@ $.extend(TRIP, {
  TRIP.getDeals();
  TRIP.getCities();
  TRIP.initIsotope();
+
 });	
