@@ -92,6 +92,13 @@ $.extend(TRIP, {
 			    alert("Error: " + error.code + " " + error.message);
 			}
 		})
+	},
+	initIsotope: function() {
+		$('#container').isotope({
+		  // options
+		  itemSelector : '.item',
+		  layoutMode : 'fitRows'
+		});
 	}
 });
 
@@ -100,4 +107,6 @@ $(function() {
      TRIP.setLocale();
      TRIP.getDeals();
      TRIP.getCities();
+     TRIP.initIsotope();
+
 });
