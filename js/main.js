@@ -17,12 +17,37 @@ $.extend(TRIP, {
 	daydiff: function(start, end) {
 		return Math.round((end-start)/(1000*60*60*24));
 	},
+	getURLParameter: function (name) {
+	    return decodeURI(
+	        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+	    );
+	},
 	locationString: function(str) {
 		var parts = str.split(",");
 		if (parts) {
 			if (parts[1] != " DC") return parts[0];
 		}
 		return str;
+	},
+	setLocale: function() {
+		var param = TRIP.getURLParameter("origin");
+		if (param != 'null') TRIP.user_airport = param.substring(0, param.length - 1);;
+		var Cities = Parse.Object.extend("Cities"),
+		city = new Cities();
+		query = new Parse.Query(Cities);
+		query.equalTo("airport_code", TRIP.user_airport);
+		query.find({
+			success: function(results) {
+				if (results && results.length > 0)
+					$('#dropdown-button').html(results[0].get("city"));
+			},
+			error: function(results) {
+			    alert("Error: " + error.code + " " + error.message);
+			}
+		})
+	},
+	appendToDropdown: function(city) {
+		$("#dropdown-cities ul").append("<li><a href=?origin=" + city.get("airport_code") + ">" + city.get("city") + ", " + city.get("state") + "</a></li>");
 	},
 	appendDeal: function(flight, styleName) {
 
@@ -66,10 +91,28 @@ $.extend(TRIP, {
 		  }
 		});
 	},	
+	getCities: function() {
+		var Cities = Parse.Object.extend("Cities"),
+		city = new Cities();
+		query = new Parse.Query(Cities);
+		query.notEqualTo("city", "Tijuana");
+		query.find({
+			success: function(results) {
+		  		$.each(results, function() {
+			  		TRIP.appendToDropdown(this);
+			  	});
+			},
+			error: function(results) {
+			    alert("Error: " + error.code + " " + error.message);
+			}
+		})
+	}
 });
 
 $(function() {
      // Same as $(document).ready(function {}). TIL
+     TRIP.setLocale();
      TRIP.getDeals();
+     TRIP.getCities();
 });	
 })

@@ -7,8 +7,10 @@
   <meta name="viewport" content="width=device-width"> 
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="http://umich.marketloco.com/static/css/font-awesome.css" />
+  <link type="text/css" rel="stylesheet" href="css/dropdown-menu.css" />
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.1.16.min.js"></script>
+  <script type="text/javascript" src="js/dropdown.js"></script>
   <script type="text/javascript" src="//use.typekit.net/tfv4xex.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
   <script type="text/javascript" src="js/handlebars.js"></script>
@@ -25,6 +27,13 @@
     <div class="deals">
       <div class="explanation grid_12">
         Getaway Deals From 
+        <a class="navbar-button" href="#" id="dropdown-button" data-dropdown="#dropdown-cities"></a>
+        <div id="dropdown-cities" class="dropdown-menu has-tip">
+          <ul>
+              <!-- <li><a href="#1">Item 1</a></li> -->
+              
+          </ul>
+        </div>
         <span class="drop-down">Detroit, MI &nbsp;<i class="icon-caret-down"></i></span>
       </div>
       <script id="deal-template" type="text/x-handlebars-template">
