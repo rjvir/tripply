@@ -1,7 +1,11 @@
 //Written by Jesse Daugherty and Raj Vir
 //(hop off our source code)
 
+$(document).ready(function(){
+
 Parse.initialize("mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL", "nMBVdpIpZ3XjGMBMOygTpC1OXfHtUUd7i5nlXaj3");
+var source = $('#deal-template').html();
+var template = Handlebars.compile(source);
 
 var TRIP = TRIP || {};
 $.extend(TRIP, {
@@ -46,6 +50,7 @@ $.extend(TRIP, {
 		$("#dropdown-cities ul").append("<li><a href=?origin=" + city.get("airport_code") + ">" + city.get("city") + ", " + city.get("state") + "</a></li>");
 	},
 	appendDeal: function(flight, styleName) {
+
       	var imgUrl = flight.get("destImage"),
       		HTML0 = "<div class='deal-box grid_3'><div class=border-wrapper><div class=deal style='background-image:url(",
 			HTML1 = ");'> <div class=destination>",
@@ -55,11 +60,20 @@ $.extend(TRIP, {
 			returnDate = TRIP.parseDate(flight.get("returnDate")),
 			numDays = TRIP.daydiff(startDate,returnDate);
 
-		$('.deals').append(
+		var html = template({
+			destination: TRIP.locationString(flight.get("destLocation")), 
+			bg: "http://www.travelwizard.com/fiji/media/wadigibeach.jpg",
+			num_nights: numDays,
+			leaving: flight.get("departDate"),
+			price: flight.get("price"),
+			old_price: parseInt(flight.get("price"))+100
+		})
+		$('.deals').append(html);
+/*		$('.deals').append(
   			HTML0 + imgUrl +
   			HTML1 + numDays + " nights in " + TRIP.locationString(flight.get("destLocation")) +
   			HTML2 + "$" + flight.get("price") + " leaving " + flight.get("departDate") + HTML3
-	  	);
+	  	); */
 	},
 	getDeals: function() {
 		var Deals = Parse.Object.extend("Deals"),
@@ -109,4 +123,5 @@ $(function() {
      TRIP.getCities();
      TRIP.initIsotope();
 
-});
+
+});	
