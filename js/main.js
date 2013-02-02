@@ -5,22 +5,22 @@ Parse.initialize("mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL", "nMBVdpIpZ3XjGMBMOy
 
 var TRIP = TRIP || {};
 $.extend(TRIP, {
-	user_airport: "ATL",
+	user_airport: "DTW",
 	appendDeal: function(flight, styleName) {
-		//create HTML OBJ
-		var HTML0 = "<div class=deal><div class=destLocation> Location: ",
-			HTML1 = "</div><div class=deal_days> Nights: ",
-			HTML2 = "</div><div class=deal_price> Price : ",
-			HTML3 = "</div></div>";
+      	var imgUrl = "http://www.travelwizard.com/fiji/media/wadigibeach.jpg",
+      		HTML0 = "<div class='deal-box grid_4'><div class=border-wrapper><div class=deal style='background-image:url(",
+			HTML1 = ");'> <div class=destination>",
+			HTML2 = "<br /><div class=price>",
+			HTML3 = "</div></div></div></div></div>";
 			var startDate = flight.get("departDate").replace(/\//g,""),
 			endDate = flight.get("returnDate").replace(/\//g,"");
 			startDate = parseInt(startDate);
 			endDate = parseInt(endDate);
 			var numDays = (endDate - startDate) / 100;
 		$('.deals').append(
-  			HTML0 + flight.get("destLocation") +
-  			HTML1 + numDays +
-  			HTML2 + flight.get("price") + HTML3
+  			HTML0 + imgUrl +
+  			HTML1 + flight.get("destLocation") + " for " + numDays + " nights." +
+  			HTML2 + "$" + flight.get("price") + " leaving " + flight.get("departDate") + HTML3
 	  	);
 	},
 	getDeals: function() {
