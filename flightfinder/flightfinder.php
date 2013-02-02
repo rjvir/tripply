@@ -1,5 +1,14 @@
 <?php
 
+include_once "oauth/OAuthStore.php";
+include_once "oauth/OAuthRequester.php";
+
+$key = 'dj0yJmk9MmNaTlRDakoyMjZMJmQ9WVdrOVJYTlhUVXRVTjJjbWNHbzlNVGsxTlRBNU9ETTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD1jYw--'; // this is your consumer key
+$secret = '8edb8e5159d5dbfa97d7e2ad8ad0d3bc79415423'; // this is your secret key
+
+$options = array( 'consumer_key' => $key, 'consumer_secret' => $secret );
+OAuthStore::instance("2Leg", $options );
+
 function parse($url) {
 		$fileContents= file_get_contents($url);
 		$fileContents = str_replace(array("\n", "\r", "\t","kyk:"), '', $fileContents);
@@ -23,7 +32,7 @@ function date_compare($a, $b)
 
 /*******************************************************************************************/
 //Delete function begins here.
-
+/*
 $ch = curl_init("https://api.parse.com/1/classes/Deals");
 $headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
 				"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
@@ -79,18 +88,23 @@ else die('unable to get companies');
 foreach($airports as $airport){
 	set_time_limit(30);
 	$rss = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".date("Ym")), true);
-	/*
 	for($i=0;$i<count($rss);$i++){
-		$url = "http://images.google.com/search?tbm=isch&q=beautiful+".str_replace(" ","+",str_replace(",","",$rss[$i]["destLocation"]));
-		$page = file_get_contents($url);
-		preg_match_all('/<img[^>]+>/i',$page, $result); 
-		$pos = strpos($result[0][0], 'src="');
-		$src = substr($result[0][0], $pos);
-		$src = str_replace(array('src="','"','>'), "", $src);
-		echo $rss[$i]["destImage"] = $src;
-		die();
+		$url = "http://yboss.yahooapis.com/ysearch/images?q=".str_replace(",","",$rss[$i]["destLocation"]); // this is the URL of the request
+		$method = "GET"; // you can also use POST instead
+		$params = null;
+		try{
+			// Obtain a request object for the request we want to make
+			$request = new OAuthRequester($url, $method, $params);
+			// Sign the request, perform a curl request and return the results, 
+			// throws OAuthException2 exception on an error
+			// $result is an array of the form: array ('code'=>int, 'headers'=>array(), 'body'=>string)
+			$result = $request->doRequest();
+			$response = $result['body'];
+			$response = json_decode($response, true);
+			$rss[$i]["destImage"] = $response["bossresponse"]["images"]["results"][0]["url"];
+		}
+		catch(OAuthException2 $e){ die('Oauth error');}
 	}
-	*/
 	usort($rss, "date_compare");
 	$data = array();
 	for($i = 0; $i<12;$i++){
