@@ -76,7 +76,7 @@ $.extend(TRIP, {
 			})
 			$('.deals-container').append(html);
 			TRIP.item_count++;
-			if (TRIP.item_count == 12) {
+			if (TRIP.item_count == TRIP.numCities) {
 				TRIP.initIsotope();
 			}
 		  },
@@ -91,6 +91,14 @@ $.extend(TRIP, {
 		deal = new Deals(),
 		query = new Parse.Query(Deals);
 		query.equalTo("originCode", TRIP.user_airport);
+		query.count({
+			success:function(count) {
+				TRIP.numCities = count;
+			},
+			error: function(result) {
+				//do nothing
+			}
+		});
 		query.find({
 		  success: function(results) {
 		  	$.each(results, function() {
