@@ -9,16 +9,19 @@ var template = Handlebars.compile(source),
 	imgUrl = "http://www.photo-dictionary.com/photofiles/list/8/667airplane.jpg";
 
 var TRIP = TRIP || {};
+
+moment.calendar = {
+    lastDay : '[Yesterday]',
+    sameDay : '[Today]',
+    nextDay : '[Tomorrow]',
+    lastWeek : '[last] dddd',
+    nextWeek : 'dddd',
+    sameElse : 'L'
+};
+
 $.extend(TRIP, {
 	user_airport: "DTW",
 	item_count: 0,
-	parseDate: function(str) {
-		var mdy = str.split('/')
-    	return new Date('20' + mdy[2], mdy[0]-1, mdy[1]);
-	},
-	daydiff: function(start, end) {
-		return Math.round((end-start)/(1000*60*60*24));
-	},
 	getURLParameter: function (name) {
 	    return decodeURI(
 	        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
@@ -57,19 +60,18 @@ $.extend(TRIP, {
 		cityImage = new CityImages(),
 		cityQuery = new Parse.Query(CityImages);
       	cityQuery.equalTo("airportCode", aptCode);
-      	var startDate = TRIP.parseDate(flight.get("departDate")),
-		returnDate = TRIP.parseDate(flight.get("returnDate")),
-		numDays = TRIP.daydiff(startDate,returnDate),
-		randFact = ((Math.random() * 2) + 1.4);
       	cityQuery.first({
 		  success: function(result) {
 		  	imgUrl = result.get("imageUrl");
-
+			var startDate =  moment(flight.get("departDate"), "MM/DD/YY");
+			returnDate = moment(flight.get("returnDate"), "MM/DD/YY"),
+			numDays = returnDate.diff(startDate,'days'),
+			randFact = ((Math.random() * 2) + 1.4);
 		  	var html = template({
 				destination: TRIP.locationString(flight.get("destLocation")), 
 				bg: imgUrl,
-				num_nights: numDays,
-				leaving: flight.get("departDate"),
+				trip_length: (numDays != 0 ? ("for " + numDays + ((numDays != 1) ? " Nights" : " Night")) : "- Daytrip"),
+				leaving: startDate.calendar(),
 				price: flight.get("price"),
 				old_price: parseInt(randFact*flight.get("price")),
 				buynowhref: flight.get("link")
