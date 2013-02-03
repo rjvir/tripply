@@ -8,7 +8,6 @@ html, body {
 
 body * {
     font-family:'futura-pt';
-    font-size:14px;
 }
 
 .container {
@@ -57,7 +56,7 @@ body * {
 .slogan {
     display:inline-block;
     font-size:30px;
-    margin-left:16px;
+    margin-left:9px;
     color:#004521;
     color:#fff;
     font-weight:normal;
@@ -72,14 +71,13 @@ body * {
     font-weight:bold;
     font-family:'helvetica';
     font-size:20px;
-    padding:6px 9px;
+    padding:6px 15px;
     margin-left:4px;
 	text-transform:none;
-    background-color:rgba(255,255,255,.9);
-    color:#666;
+    background-color:rgba(0,0,0,.5);
+    color:#eee;
     border-radius:5px;  
     cursor:pointer;
-    color:#000;
     display:inline-block;
     width: auto;
 
@@ -140,18 +138,31 @@ body * {
 .destination {
     position:absolute;
     bottom:0;
-    padding:10px 25px;
     background-color:rgba(0,0,200,.6);
     color:#fff;
     font-weight:bold;
     right:0;
+    width:290px;
+    font-size:15px;
+}
+
+.large .destination {
+    width:340px;
+    font-size:20px;
+}
+
+.destination-wrapper {
+    padding:10px 25px;
 }
 
 .when {
     color:#eee;
     font-weight:normal;
-    font-family:helvetica;
-    font-size:15px;
+    display:none;
+}
+
+.large .when {
+    display:inline-block;
 }
 
 .price {
@@ -169,9 +180,14 @@ body * {
 .old-price {
     color:#ccc;
     text-align:right;
-    display:inline-block;
+    display:none;
     position:relative;
     text-decoration: line-through;
+    font-size:16px;
+}
+
+.large .old-price {
+    display:block;
 }
 
 .strike-through {
@@ -190,7 +206,7 @@ body * {
 
 .buynow, .booknow {
     position: relative;
-    background: rgba(192,232,70,0.7);
+    background: rgba(192,232,70,0.8);
     display:none;
     color:#fff;
     text-decoration: none;
@@ -200,7 +216,8 @@ body * {
 }
 
 .booknow {
-    background: rgba(202,242,80,0.5);
+    background: rgba(122,222,222,0.8);
+    font-size:20px;
 }
 
 .large .buynow, .large .booknow{

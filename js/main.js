@@ -77,6 +77,7 @@ $.extend(TRIP, {
 			$('.deals-container').append(html);
 			TRIP.item_count++;
 			if (TRIP.item_count == TRIP.numCities) {
+				$('.deal-box').first().addClass('large');
 				TRIP.initIsotope();
 			}
 		  },
