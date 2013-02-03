@@ -51,12 +51,22 @@ $.extend(TRIP, {
 		$("#dropdown-cities ul").append("<li><a href=?origin=" + city.get("airport_code") + "/>" + city.get("city") + ", " + city.get("state") + "</a></li>");
 	},
 	appendDeal: function(flight, styleName) {
-
-      	var imgUrl = flight.get("destImage"),
-			startDate = TRIP.parseDate(flight.get("departDate")),
-			returnDate = TRIP.parseDate(flight.get("returnDate")),
-			numDays = TRIP.daydiff(startDate,returnDate),
-			randFact = ((Math.random() * 2) + 1.4);
+		var aptCode = flight.get("airportCode"),
+		imgUrl,
+		CityImages = Parse.Object.extend("CityImages"),
+		cityImage = new CityImages(),
+		cityQuery = new Parse.Query(CityImages);
+      	cityQuery.first({
+		  success: function(result) {
+		  	imgUrl = result.get("imageUrl");
+		  },
+		  error: function(error) {
+		    alert("Error: " + error.code + " " + error.message);
+		  }
+		var startDate = TRIP.parseDate(flight.get("departDate")),
+		returnDate = TRIP.parseDate(flight.get("returnDate")),
+		numDays = TRIP.daydiff(startDate,returnDate),
+		randFact = ((Math.random() * 2) + 1.4);
 
 		var html = template({
 			destination: TRIP.locationString(flight.get("destLocation")), 
