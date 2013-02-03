@@ -65,7 +65,9 @@ $.extend(TRIP, {
 			leaving: flight.get("departDate"),
 			price: flight.get("price"),
 			old_price: parseInt(randFact*flight.get("price")),
-			buynowhref: flight.get("link")
+			buynowhref: flight.get("link"),
+			booknowhref: 'https://www.airbnb.com/s/'+flight.get("destLocation")+'?checkin='+flight.get("departDate")+'&checkout='+flight.get("returnDate")
+			//https://www.airbnb.com/s/los-angeles--ca?checkin=02%2F13%2F2013&checkout=02%2F16%2F2013
 		})
 		$('.deals-container').append(html);
 		TRIP.item_count++;

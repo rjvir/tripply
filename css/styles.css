@@ -192,20 +192,23 @@ body * {
 }
 
 .large .deal .buynow{
-    display:block;
+    display:inline-block;
 }
 
 .buynow {
     position: relative;
-    width:180px;
     top:150px;
     background: rgba(192,232,70,0.7);
+    display:inline-block;
 }
 .buynow a{
     margin:0 0 0 10px;
     color: #fff;
     text-decoration: none;
-    font-size: 38px;
+    font-size: 28px;
+    font-weight:bold;
+    padding:8px 12px;
+    display:inline-block;
 }
 .buynow a:visited{
     color: #fff;
