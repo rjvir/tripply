@@ -152,17 +152,19 @@ body * {
 }
 
 .destination-wrapper {
-    padding:10px 25px;
+    padding:6px 12px;
 }
 
 .when {
     color:#eee;
     font-weight:normal;
-    display:none;
+    display:inline-block;
+    font-size:13px;
 }
 
 .large .when {
     display:inline-block;
+    font-size:16px;
 }
 
 .price {
@@ -225,7 +227,7 @@ body * {
 }
 
 .buynow {
-    margin-top:100px;
+    margin-top:70px;
 }
 
 .buynow a:visited, .booknow a:visited{
