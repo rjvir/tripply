@@ -20,11 +20,11 @@ body * {
     background-image:url(../img/plane.jpg);
     background-size:cover;
     background-position:center center;
-    height:300px;
+    height:260px;
 }
 
 .header {
-    width:960px;
+    width:940px;
     margin:0 auto;
 }
 
@@ -43,34 +43,36 @@ body * {
     margin-left:16px;
     color:#004521;
     color:#fff;
+    font-weight:normal;
     font-family:'futura-pt', 'helvetica', sans-serif;
 }
 
 .explanation {
-    font-size:13px;
-    font-weight:normal;
+    font-size:20px;
+    font-weight:bold;
     font-family:'helvetica';
     display:inline-block;
-}
-
-.left {
-    float:left;
-}
-
-.right {
-    float:right;
+    background-color:rgba(0,0,0,.6);
+    padding:20px;
+    text-transform:lowercase;
+    color:#fff;
+    line-height:1.5em;
+    padding-bottom:30px;
 }
 
 .drop-down {
     font-weight:bold;
     font-family:'helvetica';
-    font-size:inherit;
-    padding:4px 8px;
+    font-size:14px;
+    padding:6px 9px;
     margin-left:4px;
-    border:1px solid #fcfcfc;
-    background-color:#f0f0f0;
+/*    border:1px solid #fcfcfc; */
+    background-color:rgba(255,255,255,.9);
+    color:#666;
     border-radius:5px;  
     cursor:pointer;
+    color:#000;
+    display:inline-block;
 }
 
 #dropdown-cities ul {
