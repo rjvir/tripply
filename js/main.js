@@ -5,7 +5,8 @@ $(document).ready(function(){
 
 Parse.initialize("mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL", "nMBVdpIpZ3XjGMBMOygTpC1OXfHtUUd7i5nlXaj3");
 var source = $('#deal-template').html();
-var template = Handlebars.compile(source);
+var template = Handlebars.compile(source),
+	imgUrl = "http://www.photo-dictionary.com/photofiles/list/8/667airplane.jpg";
 
 var TRIP = TRIP || {};
 $.extend(TRIP, {
@@ -51,37 +52,38 @@ $.extend(TRIP, {
 		$("#dropdown-cities ul").append("<li><a href='?origin=" + city.get("airport_code") + "/'>" + city.get("city") + ", " + city.get("state") + "</a></li>");
 	},
 	appendDeal: function(flight, styleName) {
-		var aptCode = flight.get("airportCode"),
-		imgUrl,
+		var aptCode = flight.get("destCode"),
 		CityImages = Parse.Object.extend("CityImages"),
 		cityImage = new CityImages(),
 		cityQuery = new Parse.Query(CityImages);
+      	cityQuery.equalTo("airportCode", aptCode);
+      	var startDate = TRIP.parseDate(flight.get("departDate")),
+		returnDate = TRIP.parseDate(flight.get("returnDate")),
+		numDays = TRIP.daydiff(startDate,returnDate),
+		randFact = ((Math.random() * 2) + 1.4);
       	cityQuery.first({
 		  success: function(result) {
 		  	imgUrl = result.get("imageUrl");
+
+		  	var html = template({
+				destination: TRIP.locationString(flight.get("destLocation")), 
+				bg: imgUrl,
+				num_nights: numDays,
+				leaving: flight.get("departDate"),
+				price: flight.get("price"),
+				old_price: parseInt(randFact*flight.get("price")),
+				buynowhref: flight.get("link")
+			})
+			$('.deals-container').append(html);
+			TRIP.item_count++;
+			if (TRIP.item_count == 12) {
+				TRIP.initIsotope();
+			}
 		  },
 		  error: function(error) {
 		    alert("Error: " + error.code + " " + error.message);
 		  }
-		var startDate = TRIP.parseDate(flight.get("departDate")),
-		returnDate = TRIP.parseDate(flight.get("returnDate")),
-		numDays = TRIP.daydiff(startDate,returnDate),
-		randFact = ((Math.random() * 2) + 1.4);
-
-		var html = template({
-			destination: TRIP.locationString(flight.get("destLocation")), 
-			bg: flight.get("destImage"),
-			num_nights: numDays,
-			leaving: flight.get("departDate"),
-			price: flight.get("price"),
-			old_price: parseInt(randFact*flight.get("price")),
-			buynowhref: flight.get("link")
-		})
-		$('.deals-container').append(html);
-		TRIP.item_count++;
-		if (TRIP.item_count == 12) {
-			TRIP.initIsotope();
-		}
+		});
 
 	},
 	getDeals: function() {
@@ -121,7 +123,11 @@ $.extend(TRIP, {
 		$('.deals-container').isotope({
 		  // options
 		  itemSelector : '.deal-box',
-		  layoutMode : 'masonry'
+		  layoutMode : 'masonry',
+		  masonry : { 
+		   	columnWidth : 320 
+		  }
+
 		});
 
 		 $('.deal-box').click(function(){
