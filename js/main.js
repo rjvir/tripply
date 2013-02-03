@@ -10,6 +10,7 @@ var template = Handlebars.compile(source);
 var TRIP = TRIP || {};
 $.extend(TRIP, {
 	user_airport: "DTW",
+	item_count: 0,
 	parseDate: function(str) {
 		var mdy = str.split('/')
     	return new Date('20' + mdy[2], mdy[0]-1, mdy[1]);
@@ -54,7 +55,8 @@ $.extend(TRIP, {
       	var imgUrl = flight.get("destImage"),
 			startDate = TRIP.parseDate(flight.get("departDate")),
 			returnDate = TRIP.parseDate(flight.get("returnDate")),
-			numDays = TRIP.daydiff(startDate,returnDate);
+			numDays = TRIP.daydiff(startDate,returnDate),
+			randFact = ((Math.random() * 2) + 1.4);
 
 		var html = template({
 			destination: TRIP.locationString(flight.get("destLocation")), 
@@ -62,9 +64,14 @@ $.extend(TRIP, {
 			num_nights: numDays,
 			leaving: flight.get("departDate"),
 			price: flight.get("price"),
-			old_price: parseInt(1.4*flight.get("price"))
+			old_price: parseInt(randFact*flight.get("price"))
 		})
 		$('.deals-container').append(html);
+		TRIP.item_count++;
+		if (TRIP.item_count == 12) {
+			TRIP.initIsotope();
+		}
+
 	},
 	getDeals: function() {
 		var Deals = Parse.Object.extend("Deals"),
@@ -92,11 +99,7 @@ $.extend(TRIP, {
 			success: function(results) {
 		  		$.each(results, function() {
 			  		TRIP.appendToDropdown(this);
-			  	});
-				 
-				TRIP.initIsotope();
-
-
+			  	});				 
 			},
 			error: function(results) {
 			    alert("Error: " + error.code + " " + error.message);
