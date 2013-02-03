@@ -10,6 +10,12 @@ $secret = '8edb8e5159d5dbfa97d7e2ad8ad0d3bc79415423'; // this is your secret key
 $options = array( 'consumer_key' => $key, 'consumer_secret' => $secret );
 OAuthStore::instance("2Leg", $options );
 
+function prettyprint($obj){
+	echo "<pre>";
+	echo json_encode($obj, JSON_PRETTY_PRINT);
+	echo "</pre>";
+}
+
 function parse($url) {
 		$fileContents= file_get_contents($url);
 		$fileContents = str_replace(array("\n", "\r", "\t","kyk:"), '', $fileContents);
@@ -32,7 +38,7 @@ function date_compare($a, $b)
 }
 
 /*******************************************************************************************/
-//Delete function begins here.
+//Objects that need to be deleted.
 
 $ch = curl_init("https://api.parse.com/1/classes/Deals?limit=600");
 $headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
@@ -56,9 +62,30 @@ echo "Objects To Delete Loaded In: ";
 echo time()-$startTime;
 echo "<br>";
 
-//Delete function ends here.
+/*******************************************************************************************/
+//Get cities that already have images.
+
+$ch = curl_init("https://api.parse.com/1/classes/CityImages?limit=1000");
+$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
+				"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
+				"Content-type: application/json");
+
+//set the url, number of POST vars, POST data
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+if($return = curl_exec($ch)) curl_close($ch);
+else die(curl_error($ch));
+
+$return = json_decode($return, true);
+$citieswithimages = array();
+foreach($return["results"] as $cityimage){
+	$citieswithimages[] = $cityimage["airportCode"];
+}
+
 
 /*******************************************************************************************/
+//Get airports
 set_time_limit(30);
 $airports = array();
 if(($file = fopen("airports.csv","r")) !== false){
@@ -69,8 +96,12 @@ if(($file = fopen("airports.csv","r")) !== false){
 else die('unable to get companies');
 
 /*******************************************************************************************/
+//Post new data to parse.com
+
 $postTime = time();
+$airportimagestoadd = array();
 foreach($airports as $airport){
+	$imagestopost = array();
 	set_time_limit(30);
 	$rss = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".date("Ym")), true);
 	
@@ -80,10 +111,10 @@ foreach($airports as $airport){
 	foreach($rss as $key=>$deal){
 		$date1 = explode("/",$deal["departDate"]);
 		$date2 = explode("/",$deal["returnDate"]);
-		$datetime1 = new DateTime('20'.$date1[2].'-'.$date1[0].'-'.$date1[1]);
-		$datetime2 = new DateTime('20'.$date2[2].'-'.$date2[0].'-'.$date2[1]);
-		$interval = $datetime1->diff($datetime2);
-		if(!in_array($deal["destCode"],$temp) && $interval->format('d') < 11){
+		$datetime1 = new DateTime('20'.$date1[2].'-'.$date1[0]."-".$date1[1]);
+		$datetime2 = new DateTime('20'.$date2[2].'-'.$date2[0]."-".$date2[1]);
+		$interval = $datetime1->diff($datetime2, true);
+		if(!in_array($deal["destCode"],$temp) && $interval->format('%a') < 11){
 			$tempkeys[] = $key;
 		}
 	}
@@ -96,33 +127,54 @@ foreach($airports as $airport){
 	array_splice($rss, 12);
 	
 	foreach($rss as $key=>$deal){
-		$url = "http://yboss.yahooapis.com/ysearch/images?q=".str_replace(",","",$deal["destLocation"]); // this is the URL of the request
-		$method = "GET"; // you can also use POST instead
-		$params = null;
-		try{
-			// Obtain a request object for the request we want to make
-			$request = new OAuthRequester($url, $method, $params);
-			// Sign the request, perform a curl request and return the results, 
-			// throws OAuthException2 exception on an error
-			// $result is an array of the form: array ('code'=>int, 'headers'=>array(), 'body'=>string)
-			$result = $request->doRequest();
-			$response = $result['body'];
-			$response = json_decode($response, true);
-			$rss[$key]["destImage"] = $response["bossresponse"]["images"]["results"][0]["url"];
+		if(!in_array($deal['destCode'],$citieswithimages) && !in_array($deal['destCode'],$airportimagestoadd)){
+			$url = "http://yboss.yahooapis.com/ysearch/images?q=".str_replace(",","",$deal["destLocation"]); // this is the URL of the request
+			$method = "GET"; // you can also use POST instead
+			$params = null;
+			try{
+				// Obtain a request object for the request we want to make
+				$request = new OAuthRequester($url, $method, $params);
+				// Sign the request, perform a curl request and return the results, 
+				// throws OAuthException2 exception on an error
+				// $result is an array of the form: array ('code'=>int, 'headers'=>array(), 'body'=>string)
+				$result = $request->doRequest();
+				$response = $result['body'];
+				$response = json_decode($response, true);
+				$airportimagestoadd[] = $deal['destCode'];
+				$imagestopost[] = array("airportCode" => $deal['destCode'], "imageUrl" => $response["bossresponse"]["images"]["results"][0]["url"]);
+			}
+			catch(OAuthException2 $e){ die('Oauth error');}
 		}
-		catch(OAuthException2 $e){ die('Oauth error');}
 	}
-	
 	$data = array();
 	foreach($rss as $deal){
 		$data["requests"][] = array("method" => "POST", "path" => "/1/classes/Deals", "body" => $deal);
-	}	
+	}
+	
+	$imagepost = array();
+	foreach($imagestopost as $imagedata){
+		$imagepost["requests"][] = array("method" => "POST", "path" => "/1/classes/CityImages", "body" => $imagedata);
+	}
 	
 	$ch = curl_init("https://api.parse.com/1/batch");
 	$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
 					"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
 					"Content-type: application/json");
+	//set the url, number of POST vars, POST data
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($imagepost));
+	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 	
+	if(curl_exec($ch)) curl_close($ch);
+	else die(curl_error($ch));
+		
+
+	$ch = curl_init("https://api.parse.com/1/batch");
+	$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
+					"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
+					"Content-type: application/json");
 	//set the url, number of POST vars, POST data
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -137,6 +189,9 @@ foreach($airports as $airport){
 echo "Objects Posted In: ";
 echo time()-$postTime;
 echo "<br>";
+
+/*******************************************************************************************/
+//Delete old objects.
 
 $deleteTime = time();
 
