@@ -60,18 +60,19 @@
           <div class="border-wrapper">
             <div class="deal" style="background-image:url({{bg}});">
                 <div class="destination">
-                  {{destination}} {{trip_length}}<br />
-                  <div class="when">leaving {{leaving}}</div>
+                  <div class="destination-wrapper">
+                    {{destination}} {{trip_length}}<br />
+                    <div class="when">leaving {{leaving}}</div>
+                  </div>
                 </div>
                 <div class="price">
                   <div class="old-price">
                     ${{old_price}}
-                  </div><br />
+                  </div>
                   ${{price}}
                 </div>
-        				<div class="buynow">
-        					<a href={{buynowhref}} target="_blank">Buy Now!</a>
-        				</div>
+        				<a class="buynow buybutton" href="{{buynowhref}}" target="_blank">Book Flight Now!</a><div style="clear:both"></div>
+                <a class="booknow buybutton" href="{{booknowhref}}" target="_blank">Check lodging</a>
             </div>
           </div>
         </div>
@@ -92,7 +93,7 @@
       </style>
       <div id="mc_embed_signup">
       <form action="http://nowcation.us6.list-manage1.com/subscribe/post?u=532d49620bcbc92b274ec71e0&amp;id=c5b2050fe3" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-        <label for="mce-EMAIL">Get Nowcations in your inbox every day</label>
+        <label for="mce-EMAIL">Get Nowcations in your inbox every week</label>
         <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required style="width:320px;display:inline-block;margin-right:8px;">
         <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="display:inline-block;width:100px;height:36px;background-color:#007236;">
       </form>

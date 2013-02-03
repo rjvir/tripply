@@ -67,6 +67,7 @@ $.extend(TRIP, {
 			returnDate = moment(flight.get("returnDate"), "MM/DD/YY"),
 			numDays = returnDate.diff(startDate,'days'),
 			randFact = ((Math.random() * 2) + 1.4);
+
 		  	var html = template({
 				destination: TRIP.locationString(flight.get("destLocation")), 
 				bg: imgUrl,
@@ -74,11 +75,13 @@ $.extend(TRIP, {
 				leaving: startDate.calendar(),
 				price: flight.get("price"),
 				old_price: parseInt(randFact*flight.get("price")),
-				buynowhref: flight.get("link")
+				buynowhref: flight.get("link"),
+				booknowhref: 'https://www.airbnb.com/s/'+flight.get("destLocation").replace('/', ' ')+'?checkin='+flight.get("departDate")+'&checkout='+flight.get("returnDate")
 			})
 			$('.deals-container').append(html);
 			TRIP.item_count++;
 			if (TRIP.item_count == TRIP.numCities) {
+				$('.deal-box').first().addClass('large');
 				TRIP.initIsotope();
 			}
 		  },
