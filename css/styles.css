@@ -187,30 +187,31 @@ body * {
     margin:0 auto;
     width:960px;
 }
-.deal-box .buynow{
-    display:none;
-}
 
-.large .deal .buynow{
-    display:inline-block;
-}
-
-.buynow {
+.buynow, .booknow {
     position: relative;
-    top:150px;
     background: rgba(192,232,70,0.7);
-    display:inline-block;
-}
-.buynow a{
-    margin:0 0 0 10px;
-    color: #fff;
+    display:none;
+    color:#fff;
     text-decoration: none;
     font-size: 28px;
     font-weight:bold;
     padding:8px 12px;
+}
+
+.booknow {
+    background: rgba(202,242,80,0.5);
+}
+
+.large .buynow, .large .booknow{
     display:inline-block;
 }
-.buynow a:visited{
+
+.buynow {
+    margin-top:100px;
+}
+
+.buynow a:visited, .booknow a:visited{
     color: #fff;
     text-decoration: none;
 }
