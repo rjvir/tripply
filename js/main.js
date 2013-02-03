@@ -110,13 +110,12 @@ $.extend(TRIP, {
 		$('.deals-container').isotope({
 		  // options
 		  itemSelector : '.deal-box',
-		  layoutMode : 'fitRows'
+		  layoutMode : 'masonry'
 		});
 
 		 $('.deal-box').click(function(){
-		 	$('.deal-box').each(function() {$(this).removeClass('grid_8').removeClass('large').addClass("grid_4")});
-		 	$(this).removeClass('grid_4').addClass('grid_8').addClass('large');
-
+		 	$('.deal-box').removeClass('large');
+		 	$(this).addClass('large');
 		 	$('.deals-container').isotope('reLayout');
 		 	//console.log('yo yo yo');
 		 	//console.log(this);

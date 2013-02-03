@@ -13,6 +13,7 @@ body * {
 
 .container {
     width:960px;
+    margin:0 auto;
 }
 
 .logo {
@@ -67,6 +68,9 @@ body * {
     margin-top:10px;
     margin-bottom:10px;
     cursor:pointer;
+    width:300px;
+    float:left;
+    margin:10px;
 }
 
 .deal-box:hover .border-wrapper {
@@ -74,7 +78,7 @@ body * {
 }
 
 .deal {
-    height:176px;
+    height:160px;
     display:block;
     background-size:cover;
     background-position:center center;
@@ -86,6 +90,7 @@ body * {
     margin-top:10px;
     margin-bottom:10px;
     cursor:pointer;
+    width:620px;
 }
 
 .deal-box.large:hover .border-wrapper {
@@ -93,7 +98,7 @@ body * {
 }
 
 .deal-box.large .deal {
-    height:460px;
+    height:350px;
     display:block;
     background-size:cover;
     background-position:center center;
