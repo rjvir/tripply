@@ -93,19 +93,9 @@ $.extend(TRIP, {
 		  		$.each(results, function() {
 			  		TRIP.appendToDropdown(this);
 			  	});
+				 
+				TRIP.initIsotope();
 
-				$('.deals-container').isotope({
-				  // options
-				  itemSelector : '.deal-box',
-				  layoutMode : 'fitRows'
-				});
-				 $('.deal-box').click(function(){
-				 	$(this).removeClass('grid_4').addClass('grid_8').addClass('large');
-				 	$('.deals-container').isotope('reLayout');
-				 	//console.log('yo yo yo');
-				 	//console.log(this);
-				 	
-				 })
 
 			},
 			error: function(results) {
@@ -114,25 +104,26 @@ $.extend(TRIP, {
 		})
 	},
 	initIsotope: function() {
-		// var $container = $('#isotope_div');
-		// $container.isotope({
-		//   // options
-		//   itemSelector : '.deal-box',
-		//   layoutMode : 'fitRows'
-		// });
-      
-  //     // change size of clicked element
-  //     $container.delegate( '.deal-box', 'click', function(){
-  //       $(this).toggleClass('large');
-  //       $container.isotope('reLayout');
-  //     });
+		$('.deals-container').isotope({
+		  // options
+		  itemSelector : '.deal-box',
+		  layoutMode : 'fitRows'
+		});
 
+		 $('.deal-box').click(function(){
+		 	$('.deal-box').removeClass('grid_8').removeClass('large').addClass("grid_4");
+		 	$(this).removeClass('grid_4').addClass('grid_8').addClass('large');
+
+		 	$('.deals-container').isotope('reLayout');
+		 	//console.log('yo yo yo');
+		 	//console.log(this);
+		 	
+		 })
 
 	}
 });
  TRIP.setLocale();
  TRIP.getDeals();
  TRIP.getCities();
- TRIP.initIsotope();
 
 });	
