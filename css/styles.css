@@ -16,19 +16,33 @@ body * {
     margin:0 auto;
 }
 
+.header-container {
+    background-image:url(../img/plane.jpg);
+    background-size:cover;
+    background-position:center center;
+    height:300px;
+}
+
+.header {
+    width:960px;
+    margin:0 auto;
+}
+
 .logo {
-    font-size:48px;
+    font-size:60px;
     font-weight:bold;
     display:inline-block;
     color:#007236;
+    color:#fff;
     font-family:'futura-pt', 'helvetica', sans-serif;
 }
 
 .slogan {
     display:inline-block;
-    font-size:24px;
-    margin-left:8px;
+    font-size:36px;
+    margin-left:16px;
     color:#004521;
+    color:#fff;
     font-family:'futura-pt', 'helvetica', sans-serif;
 }
 
