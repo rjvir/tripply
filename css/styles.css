@@ -68,7 +68,6 @@ body * {
     font-size: 22px;
 }
 
-
 .drop-down {
     font-weight:bold;
     font-family:'helvetica';
@@ -76,7 +75,6 @@ body * {
     padding:6px 9px;
     margin-left:4px;
 	text-transform:none;
-/*    border:1px solid #fcfcfc; */
     background-color:rgba(255,255,255,.9);
     color:#666;
     border-radius:5px;  
