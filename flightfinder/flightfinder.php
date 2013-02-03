@@ -32,8 +32,10 @@ function date_compare($a, $b)
 {
     $a = $a['departDate'];
     $b = $b['departDate'];
-    $a = str_replace("/", "", $a);
-    $b = str_replace("/", "", $b);
+    $a = explode("/", $a);
+    $b = explode("/", $b);
+	$a = new DateTime('20'.$a[2].'-'.$a[0]."-".$a[1]);
+	$b = new DateTime('20'.$b[2].'-'.$b[0]."-".$b[1]);
     return ($a > $b);
 }
 
@@ -104,6 +106,10 @@ foreach($airports as $airport){
 	$imagestopost = array();
 	set_time_limit(30);
 	$rss = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".date("Ym")), true);
+	$rss2 = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".(date("Ym")+1)), true);
+	foreach($rss2 as $extended){
+		$rss[] = $extended;
+	}
 	
 	usort($rss, "date_compare");
 	$temp = array();
@@ -113,8 +119,9 @@ foreach($airports as $airport){
 		$date2 = explode("/",$deal["returnDate"]);
 		$datetime1 = new DateTime('20'.$date1[2].'-'.$date1[0]."-".$date1[1]);
 		$datetime2 = new DateTime('20'.$date2[2].'-'.$date2[0]."-".$date2[1]);
+		$tomorrow = new DateTime('tomorrow');
 		$interval = $datetime1->diff($datetime2, true);
-		if(!in_array($deal["destCode"],$temp) && $interval->format('%a') < 11){
+		if(!in_array($deal["destCode"],$temp) && ($interval->format('%a') < 11) && ($datetime1 > $tomorrow)){
 			$tempkeys[] = $key;
 		}
 	}
