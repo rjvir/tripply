@@ -48,7 +48,7 @@ $.extend(TRIP, {
 		})
 	},
 	appendToDropdown: function(city) {
-		$("#dropdown-cities ul").append("<li><a href=?origin=" + city.get("airport_code") + ">" + city.get("city") + ", " + city.get("state") + "</a></li>");
+		$("#dropdown-cities ul").append("<li><a href='?origin=" + city.get("airport_code") + "/'>" + city.get("city") + ", " + city.get("state") + "</a></li>");
 	},
 	appendDeal: function(flight, styleName) {
 
