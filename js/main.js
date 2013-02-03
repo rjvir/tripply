@@ -64,7 +64,8 @@ $.extend(TRIP, {
 			num_nights: numDays,
 			leaving: flight.get("departDate"),
 			price: flight.get("price"),
-			old_price: parseInt(randFact*flight.get("price"))
+			old_price: parseInt(randFact*flight.get("price")),
+			buynowhref: flight.get("link")
 		})
 		$('.deals-container').append(html);
 		TRIP.item_count++;

@@ -66,6 +66,7 @@ body * {
     font-size:14px;
     padding:6px 9px;
     margin-left:4px;
+	text-transform:none;
 /*    border:1px solid #fcfcfc; */
     background-color:rgba(255,255,255,.9);
     color:#666;
@@ -176,4 +177,28 @@ body * {
     position:relative;
     margin:0 auto;
     width:960px;
+}
+.deal-box .buynow{
+    display:none;
+}
+
+.large .deal .buynow{
+    display:block;
+}
+
+.buynow {
+    position: relative;
+    width:180px;
+    top:150px;
+    background: rgba(192,232,70,0.7);
+}
+.buynow a{
+    margin:0 0 0 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 38px;
+}
+.buynow a:visited{
+    color: #fff;
+    text-decoration: none;
 }
