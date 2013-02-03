@@ -145,6 +145,11 @@ foreach($airports as $airport){
 			}
 			catch(OAuthException2 $e){ die('Oauth error');}
 		}
+		$depart = explode("/",$deal['departDate']);
+		$return = explode("/",$deal['returnDate']);
+		$depart = new DateTime('20'.$depart[2].'-'.$depart[0]."-".$depart[1]);
+		$return = new DateTime('20'.$return[2].'-'.$return[0]."-".$return[1]);
+		$rss[$key]['link'] = "http://www.kayak.com/flights#/".$deal['originCode']."-".$deal['destCode']."/".$depart->format('Y-m-d')."/".$return->format('Y-m-d');
 	}
 	$data = array();
 	foreach($rss as $deal){
