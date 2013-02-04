@@ -105,7 +105,8 @@ $airportimagestoadd = array();
 foreach($airports as $airport){
 	$imagestopost = array();
 	set_time_limit(30);
-	echo file_get_contents("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".date("Ym"));
+	echo parse(file_get_contents("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".date("Ym")));
+	die();
 	$rss = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".date("Ym")), true);
 	$rss2 = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".(date("Ym")+1)), true);
 	
