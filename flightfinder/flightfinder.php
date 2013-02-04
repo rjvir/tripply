@@ -41,7 +41,7 @@ function date_compare($a, $b)
 
 /*******************************************************************************************/
 //Objects that need to be deleted.
-
+/*
 $ch = curl_init("https://api.parse.com/1/classes/Deals?limit=600");
 $headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
 				"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
@@ -167,7 +167,7 @@ foreach($airports as $airport){
 	foreach($imagestopost as $imagedata){
 		$imagepost["requests"][] = array("method" => "POST", "path" => "/1/classes/CityImages", "body" => $imagedata);
 	}
-	
+	echo "posting objects total count ".count($data["requests"]);
 	$ch = curl_init("https://api.parse.com/1/batch");
 	$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
 					"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
@@ -177,7 +177,6 @@ foreach($airports as $airport){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($imagepost));
-	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 	
 	if(curl_exec($ch)) curl_close($ch);
 	else die(curl_error($ch));
@@ -204,7 +203,7 @@ echo "<br>";
 
 /*******************************************************************************************/
 //Delete old objects.
-
+/*
 $deleteTime = time();
 
 for($i = 0; $i<12; $i++){
