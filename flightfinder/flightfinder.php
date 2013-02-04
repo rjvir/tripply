@@ -107,9 +107,13 @@ foreach($airports as $airport){
 	set_time_limit(30);
 	$rss = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".date("Ym")), true);
 	$rss2 = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".(date("Ym")+1)), true);
+	
+	
 	foreach($rss2 as $extended){
 		$rss[] = $extended;
 	}
+	
+	prettyprint($rss);
 	
 	usort($rss, "date_compare");
 	$temp = array();
@@ -167,7 +171,6 @@ foreach($airports as $airport){
 	foreach($imagestopost as $imagedata){
 		$imagepost["requests"][] = array("method" => "POST", "path" => "/1/classes/CityImages", "body" => $imagedata);
 	}
-	echo "posting objects total count ".count($data["requests"]);
 	$ch = curl_init("https://api.parse.com/1/batch");
 	$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
 					"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
