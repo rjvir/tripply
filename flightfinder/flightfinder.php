@@ -18,20 +18,19 @@ function prettyprint($obj){
 
 function parse($url) {
 		$fileContents = file_get_contents($url);
-		echo $fileContents;
-		echo "printed contents";
 		$fileContents = str_replace(array("\n", "\r", "\t","kyk:"), '', $fileContents);
 		$fileContents = trim(str_replace('"', "'", $fileContents));
 		$simpleXml = simplexml_load_string($fileContents);
-		$json = json_encode($simpleXml, JSON_PRETTY_PRINT);
-		$json = json_decode($json);
-		$json = $json->channel->item;
-		$json = json_encode($json, JSON_PRETTY_PRINT);
+		$temp = array();
+		foreach($simpleXml->channel->item as $flight){
+			$temp[] = $flight;
+		}
+		$json = json_encode($temp);
+		$json = json_decode($json, true);
 		return $json;
 }
 
-function date_compare($a, $b)
-{
+function date_compare($a, $b){
     $a = $a['departDate'];
     $b = $b['departDate'];
     $a = explode("/", $a);
@@ -43,7 +42,6 @@ function date_compare($a, $b)
 
 /*******************************************************************************************/
 //Objects that need to be deleted.
-/*
 $ch = curl_init("https://api.parse.com/1/classes/Deals?limit=600");
 $headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
 				"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
@@ -87,7 +85,6 @@ foreach($return["results"] as $cityimage){
 	$citieswithimages[] = $cityimage["airportCode"];
 }
 
-
 /*******************************************************************************************/
 //Get airports
 set_time_limit(30);
@@ -98,7 +95,6 @@ if(($file = fopen("airports.csv","r")) !== false){
 	}
 }
 else die('unable to get companies');
-
 /*******************************************************************************************/
 //Post new data to parse.com
 
@@ -107,18 +103,13 @@ $airportimagestoadd = array();
 foreach($airports as $airport){
 	$imagestopost = array();
 	set_time_limit(30);
-	echo parse(file_get_contents("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".date("Ym")));
-	die();
-	$rss = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".date("Ym")), true);
-	$rss2 = json_decode(parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".(date("Ym")+1)), true);
-	
+
+	$rss = parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".date("Ym"));
+	$rss2 = parse("http://www.kayak.com/h/rss/buzz?code=".$airport."&tm=".(date("Ym")+1));
 	
 	foreach($rss2 as $extended){
 		$rss[] = $extended;
 	}
-	
-	prettyprint($rss);
-	
 	usort($rss, "date_compare");
 	$temp = array();
 	$tempkeys = array();
@@ -133,7 +124,6 @@ foreach($airports as $airport){
 			$tempkeys[] = $key;
 		}
 	}
-	
 	$temp = array();
 	foreach($tempkeys as $key){
 		$temp[] = $rss[$key];
@@ -175,9 +165,7 @@ foreach($airports as $airport){
 	foreach($imagestopost as $imagedata){
 		$imagepost["requests"][] = array("method" => "POST", "path" => "/1/classes/CityImages", "body" => $imagedata);
 	}
-	
-	/*
-	
+
 	$ch = curl_init("https://api.parse.com/1/batch");
 	$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
 					"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
@@ -187,6 +175,7 @@ foreach($airports as $airport){
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($imagepost));
+	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 	
 	if(curl_exec($ch)) curl_close($ch);
 	else die(curl_error($ch));
@@ -205,7 +194,6 @@ foreach($airports as $airport){
 	
 	if(curl_exec($ch)) curl_close($ch);
 	else die(curl_error($ch));
-	*/
 }
 
 echo "Objects Posted In: ";
@@ -214,7 +202,6 @@ echo "<br>";
 
 /*******************************************************************************************/
 //Delete old objects.
-/*
 $deleteTime = time();
 
 for($i = 0; $i<12; $i++){
