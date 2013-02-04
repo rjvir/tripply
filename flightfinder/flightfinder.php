@@ -171,6 +171,9 @@ foreach($airports as $airport){
 	foreach($imagestopost as $imagedata){
 		$imagepost["requests"][] = array("method" => "POST", "path" => "/1/classes/CityImages", "body" => $imagedata);
 	}
+	
+	/*
+	
 	$ch = curl_init("https://api.parse.com/1/batch");
 	$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
 					"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
@@ -198,6 +201,7 @@ foreach($airports as $airport){
 	
 	if(curl_exec($ch)) curl_close($ch);
 	else die(curl_error($ch));
+	*/
 }
 
 echo "Objects Posted In: ";
