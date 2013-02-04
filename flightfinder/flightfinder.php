@@ -18,6 +18,7 @@ function prettyprint($obj){
 
 function parse($url) {
 		$fileContents= file_get_contents($url);
+		echo $fileContents;
 		$fileContents = str_replace(array("\n", "\r", "\t","kyk:"), '', $fileContents);
 		$fileContents = trim(str_replace('"', "'", $fileContents));
 		$simpleXml = simplexml_load_string($fileContents);
