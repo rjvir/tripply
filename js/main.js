@@ -46,7 +46,7 @@ $.extend(TRIP, {
 		query.find({
 			success: function(results) {
 				if (results && results.length > 0)
-					$('#dropdown-button').prepend(results[0].get("city") + ", " + results[0].get("state") + " ");
+					$('#dropdown-button').prepend(results[0].get("city") + ", " + results[0].get("state") + " (" + results[0].get("airport_code") + ") ");
 			},
 			error: function(results) {
 			    alert("Error: " + error.code + " " + error.message);
