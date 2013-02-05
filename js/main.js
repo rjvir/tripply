@@ -149,6 +149,7 @@ $.extend(TRIP, {
 			//console.log(this);			
 		})
 		mixpanel.track_links(".buynow", "Click Buynow", function(ele) { return { type: $(ele).parent().find('.destination-name')}});
+		mixpanel.track_links(".booknow", "Click Hotel", function(ele) { return { type: $(ele).parent().find('.destination-name')}});
 
 	}
 });
