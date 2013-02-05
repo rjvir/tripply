@@ -39,6 +39,14 @@
   mixpanel.init("60813a3c1d959415dc910edbdd9024bc");</script><!-- end Mixpanel -->
 </head>
 <body>
+<div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=399366683480440";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
   <div class="header-container">
     <div class="header">
       <div class="header_box">
@@ -104,15 +112,18 @@
         /* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
            We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
       </style>
-      <div id="mc_embed_signup">
-      <form action="http://nowcation.us6.list-manage1.com/subscribe/post?u=532d49620bcbc92b274ec71e0&amp;id=c5b2050fe3" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-        <label for="mce-EMAIL">Get Nowcations in your inbox every week</label>
+      <div id="mc_embed_signup" style="float:left;">
+      <form action="http://nowcation.us6.list-manage1.com/subscribe/post?u=532d49620bcbc92b274ec71e0&amp;id=c5b2050fe3" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" style="padding-left:0px;"novalidate>
+        <label for="mce-EMAIL">Get Nowcation in your inbox every week</label>
         <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="email address" required style="width:320px;display:inline-block;margin-right:8px;">
         <input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button" style="display:inline-block;width:100px;height:33px;background-color:#007236;">
       </form>
       </div>
 
       <!--End mc_embed_signup-->
+      <div class="fb-like" data-href="http://facebook.com/nowcation" data-send="true" data-layout="button_count" data-width="260" data-show-faces="true"></div>
+      <a class="contact" href="mailto:raj@rjvir.com" target="_blank">Contact Us</a>
+      <div style="clear:both;"></div>
 <!-- --
       Created at MHacks by <a href="http://rjvir.com" target="_blank">Raj Vir</a>, <a href="http://jessedaugherty.com" target="_blank">Jesse Daugherty</a>, <a href="http://kabra.com" target="_blank">Pratik Kabra</a> and <a href="http://www.linkedin.com/pub/jamie-sookprasong/45/4b7/483/" target="_blank">Jamie Sookprasong</a> <!-- -->
     </div>
