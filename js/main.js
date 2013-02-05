@@ -139,7 +139,7 @@ $.extend(TRIP, {
 		});
 
 		 $('.deal-box').click(function(){
-		 	$('.deal-box').removeClass('large');
+		 	$('.deal-box.large').removeClass('large');
 		 	$(this).addClass('large');
 		 	$('.deals-container').isotope('reLayout');
 		 	//console.log('yo yo yo');
