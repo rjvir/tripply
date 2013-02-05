@@ -141,7 +141,7 @@ $.extend(TRIP, {
 		});
 
 		$('.deal-box').click(function(){
-			mixpanel.track('Enlarged Deal: ' + $(this).find('.destination-name').text());
+			mixpanel.track('Enlarged Deal', $(this).find('.destination-name').text());
 			$('.deal-box.large').removeClass('large');
 			$(this).addClass('large');
 			$('.deals-container').isotope('reLayout');
