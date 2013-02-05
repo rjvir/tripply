@@ -3,6 +3,15 @@
 
 $(document).ready(function(){
 
+$('.deals-container').isotope({
+  // options
+  	itemSelector : '.deal-box',
+  	layoutMode : 'masonry',
+  	masonry : { 
+   		columnWidth : 320 
+  	}
+});	
+
 Parse.initialize("mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL", "nMBVdpIpZ3XjGMBMOygTpC1OXfHtUUd7i5nlXaj3");
 var deal_template_source = $('#deal-template').html(),
 	dropdown_template_source = $('#dropdown-item-template').html(),
@@ -79,12 +88,20 @@ $.extend(TRIP, {
 				buynowhref: flight.get("link"),
 				booknowhref: 'https://www.airbnb.com/s/'+flight.get("destLocation").replace('/', ' ')+'?checkin='+flight.get("departDate")+'&checkout='+flight.get("returnDate")
 			})
-			$('.deals-container').append(html);
+			$('.deal-box').first().addClass('large');
+			$('.deals-container').isotope('insert', $(html));
 			TRIP.item_count++;
 			if (TRIP.item_count == TRIP.numCities) {
-				$('.deal-box').first().addClass('large');
-				TRIP.initIsotope();
+				$('.deal-box').click(function(){
+					mixpanel.track('Enlarged Deal', $(this).find('.destination-name').text());
+				 	$('.deal-box.large').removeClass('large');
+				 	$(this).addClass('large');
+				 	$('.deals-container').isotope('reLayout');
+			 	});			
 			}
+			mixpanel.track_links(".buynow", "Click Buynow", function(ele) { return { type: $(ele).parent().find('.destination-name')}});
+			mixpanel.track_links(".booknow", "Click Hotel", function(ele) { return { type: $(ele).parent().find('.destination-name')}});
+
 		  },
 		  error: function(error) {
 		    alert("Error: " + error.code + " " + error.message);
@@ -128,29 +145,6 @@ $.extend(TRIP, {
 			});
 			$("#dropdown-cities ul").append(html);
 		});
-	},
-	initIsotope: function() {
-		$('.deals-container').isotope({
-		  // options
-		  itemSelector : '.deal-box',
-		  layoutMode : 'masonry',
-		  masonry : { 
-		   	columnWidth : 320 
-		  }
-
-		});
-
-		$('.deal-box').click(function(){
-			mixpanel.track('Enlarged Deal', $(this).find('.destination-name').text());
-			$('.deal-box.large').removeClass('large');
-			$(this).addClass('large');
-			$('.deals-container').isotope('reLayout');
-			//console.log('yo yo yo');
-			//console.log(this);			
-		})
-		mixpanel.track_links(".buynow", "Click Buynow", function(ele) { return { type: $(ele).parent().find('.destination-name')}});
-		mixpanel.track_links(".booknow", "Click Hotel", function(ele) { return { type: $(ele).parent().find('.destination-name')}});
-
 	}
 });
  TRIP.setLocale();
