@@ -4,8 +4,10 @@
 $(document).ready(function(){
 
 Parse.initialize("mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL", "nMBVdpIpZ3XjGMBMOygTpC1OXfHtUUd7i5nlXaj3");
-var source = $('#deal-template').html();
-var template = Handlebars.compile(source),
+var deal_template_source = $('#deal-template').html(),
+	dropdown_template_source = $('#dropdown-item-template').html(),
+	deal_template = Handlebars.compile(deal_template_source),
+	dropdown_item_template = Handlebars.compile(dropdown_template_source),
 	imgUrl = "http://www.photo-dictionary.com/photofiles/list/8/667airplane.jpg";
 
 var TRIP = TRIP || {};
@@ -51,9 +53,6 @@ $.extend(TRIP, {
 			}
 		})
 	},
-	appendToDropdown: function(city) {
-		$("#dropdown-cities ul").append("<li><a href='?origin=" + city.get("airport_code") + "/'>" + city.get("city") + ", " + city.get("state") + "</a></li>");
-	},
 	appendDeal: function(flight, styleName) {
 		var aptCode = flight.get("destCode"),
 		CityImages = Parse.Object.extend("CityImages"),
@@ -68,7 +67,7 @@ $.extend(TRIP, {
 			numDays = returnDate.diff(startDate,'days'),
 			randFact = ((Math.random() * 2) + 1.4);
 
-		  	var html = template({
+		  	var html = deal_template({
 				destination: TRIP.locationString(flight.get("destLocation")), 
 				bg: imgUrl,
 				trip_length: (numDays != 0 ? ("for " + numDays + ((numDays != 1) ? " Nights" : " Night")) : "- Daytrip"),
@@ -96,6 +95,7 @@ $.extend(TRIP, {
 		deal = new Deals(),
 		query = new Parse.Query(Deals);
 		query.equalTo("originCode", TRIP.user_airport);
+		query.ascending("departDate");
 		query.count({
 			success:function(count) {
 				TRIP.numCities = count;
@@ -116,21 +116,16 @@ $.extend(TRIP, {
 		  }
 		});
 	},	
-	getCities: function() {
-		var Cities = Parse.Object.extend("Cities"),
-		city = new Cities();
-		query = new Parse.Query(Cities);
-		query.notEqualTo("city", "Tijuana");
-		query.find({
-			success: function(results) {
-		  		$.each(results, function() {
-			  		TRIP.appendToDropdown(this);
-			  	});				 
-			},
-			error: function(results) {
-			    alert("Error: " + error.code + " " + error.message);
-			}
-		})
+	getCities: function() {		
+  		origin_cities.sort(function(a,b) {return (a.city < b.city) ? -1 : 1;})
+  		$.each(origin_cities, function() {
+			var html = dropdown_item_template({
+				airport_code: this.airport_code, 
+				city: this.city,
+				state: this.state
+			});
+			$("#dropdown-cities ul").append(html);
+		});
 	},
 	initIsotope: function() {
 		$('.deals-container').isotope({
