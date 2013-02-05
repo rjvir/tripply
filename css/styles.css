@@ -251,7 +251,17 @@ body * {
     font-size: 16px;
 }
 
-.made_by a {
-    color:#666;
-    text-decoration: none;
+.fb-like {
+    float:left;
+    margin-left:20px;
+    padding-top:45px;
+    width:260px;
+}
+
+.contact {
+    display:inline-block;
+    margin-top:35px;
+    line-height:3em;
+    color:#444;
+    text-decoration:none;
 }

@@ -30,6 +30,8 @@ moment.calendar = {
     sameElse : 'L'
 };
 
+mixpanel.track('Loaded Page');
+
 $.extend(TRIP, {
 	user_airport: "DTW",
 	item_count: 0,
@@ -47,7 +49,6 @@ $.extend(TRIP, {
 	},
 	setLocale: function() {
 		var param = TRIP.getURLParameter("origin");
-		mixpanel.track("Loaded Origin " + param);
 		if (param != 'null') TRIP.user_airport = param.substring(0, param.length - 1);;
 		var Cities = Parse.Object.extend("Cities"),
 		city = new Cities();
@@ -92,11 +93,15 @@ $.extend(TRIP, {
 			TRIP.item_count++;
 			if (TRIP.item_count == TRIP.numCities) {
 				$('.deal-box').click(function(){
-				 	mixpanel.track("Clicked Deal");
+					mixpanel.track('Enlarged Deal', $(this).find('.destination-name').text());
 				 	$('.deal-box.large').removeClass('large');
 				 	$(this).addClass('large');
 				 	$('.deals-container').isotope('reLayout');
-			 	});			}
+			 	});			
+			}
+			mixpanel.track_links(".buynow", "Click Buynow", function(ele) { return { type: $(ele).parent().find('.destination-name')}});
+			mixpanel.track_links(".booknow", "Click Hotel", function(ele) { return { type: $(ele).parent().find('.destination-name')}});
+
 		  },
 		  error: function(error) {
 		    alert("Error: " + error.code + " " + error.message);
@@ -140,8 +145,6 @@ $.extend(TRIP, {
 			});
 			$("#dropdown-cities ul").append(html);
 		});
-	},
-	initIsotope: function() {
 	}
 });
  TRIP.setLocale();
