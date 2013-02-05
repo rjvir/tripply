@@ -204,6 +204,7 @@ body * {
     position:relative;
     margin:0 auto;
     width:960px;
+    min-height:600px;
 }
 
 .buynow, .booknow {
