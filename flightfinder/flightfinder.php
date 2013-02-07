@@ -164,7 +164,7 @@ foreach($airports as $airport){
 		//Convert dates to DateTime object to make formatting easier.
 		$depart = new DateTime('20'.$depart[2].'-'.$depart[0]."-".$depart[1]);
 		$return = new DateTime('20'.$return[2].'-'.$return[0]."-".$return[1]);
-		// $rss[$key]['link'] = "http://www.kayak.com/flights#/".$deal['originCode']."-".$deal['destCode']."/".$depart->format('Y-m-d')."/".$return->format('Y-m-d');
+		$rss[$key]['kayak_link'] = "http://www.kayak.com/flights#/".$deal['originCode']."-".$deal['destCode']."/".$depart->format('Y-m-d')."/".$return->format('Y-m-d');
 		$location = explode(',', $deal['destLocation']);
 		/*
 		$hotel_query_url = "http://api.ean.com/ean-services/rs/hotel/v3/list?cid=55505&minorRev=16&apiKey=bynsqz35cd6qjr9yncw7njb6&locale=en_US&currencyCode=USD&";
