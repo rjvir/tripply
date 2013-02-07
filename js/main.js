@@ -86,10 +86,10 @@ $.extend(TRIP, {
 				bg: imgUrl,
 				trip_length: "for " + numNights + ((numNights != 1) ? " Nights" : " Night"),
 				leaving: startDate.calendar(),
-				price: flightPrice,
+				price: Math.round(flightPrice),
 				old_price: parseInt(dafact * flightPrice),
-				hotel_price: hotelPrice,
-				total_price: totalPrice,
+				hotel_price: Math.round(hotelPrice),
+				total_price: Math.round(totalPrice),
 				buynowhref: flight.get("link"),
 				booknowhref: flight.get("hotel_link")
 			})
