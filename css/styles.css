@@ -290,9 +290,12 @@ body * {
 }
 
 .per-night {
-    font-size:18px;
+    font-size:13px;
     color:#ddd;
     font-weight:bold;
+    display:inline-block;
+    line-height:1.0em;
+    margin-left:5px;
 }
 
 .sexy-description {
