@@ -75,16 +75,21 @@ $.extend(TRIP, {
 		  	imgUrl = result.get("imageUrl");
 			var startDate =  moment(flight.get("departDate"), "MM/DD/YY");
 			returnDate = moment(flight.get("returnDate"), "MM/DD/YY"),
-			numDays = returnDate.diff(startDate,'days'),
-			randFact = ((Math.random() * 2) + 1.4);
+			numNights = returnDate.diff(startDate,'days'),
+			dafact = ((Math.random() * 1.2) + 1.4),
+			flightPrice = flight.get("price"),
+			hotelPrice = flight.get("hotel_price"),
+			totalPrice = (hotelPrice * numNights) + flightPrice;
 
 		  	var html = deal_template({
 				destination: TRIP.locationString(flight.get("destLocation")), 
 				bg: imgUrl,
-				trip_length: (numDays != 0 ? ("for " + numDays + ((numDays != 1) ? " Nights" : " Night")) : "- Daytrip"),
+				trip_length: "for " + numNights + ((numNights != 1) ? " Nights" : " Night"),
 				leaving: startDate.calendar(),
-				price: flight.get("price"),
-				old_price: parseInt(randFact*flight.get("price")),
+				price: flightPrice,
+				old_price: parseInt(dafact * flightPrice),
+				hotel_price: hotelPrice,
+				total_price: totalPrice,
 				buynowhref: flight.get("link"),
 				booknowhref: flight.get("hotel_link")
 			})
