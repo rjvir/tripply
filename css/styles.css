@@ -127,6 +127,7 @@ body * {
     background-size:cover;
     background-position:center center;
     position:relative;
+    cursor: default;
 }
 
 
@@ -216,7 +217,7 @@ body * {
     font-size: 26px;
     font-weight:bold;
     padding:0;
-    width:340px;
+    width:310px;
 }
 
 .buynow {
@@ -295,7 +296,7 @@ body * {
 }
 
 .sexy-description {
-    width:316px;
+    width:286px;
     background-color:rgba(0,0,0,.7);
     color:#fff;
     padding:12px;
@@ -317,7 +318,7 @@ body * {
 }
 
 .righter {
-    width:160px;
+    width:140px;
     position:absolute;
     right:0;
     display:inline-block;
