@@ -148,6 +148,7 @@ body * {
 .large .destination {
     width:340px;
     font-size:20px;
+    display:none;
 }
 
 .destination-wrapper {
@@ -182,14 +183,14 @@ body * {
 .old-price {
     color:#ccc;
     text-align:right;
-    display:none;
+    display:block;
     position:relative;
     text-decoration: line-through;
     font-size:16px;
 }
 
-.large .old-price {
-    display:block;
+.large .price {
+    display:none;
 }
 
 .strike-through {
@@ -209,18 +210,29 @@ body * {
 
 .buynow, .booknow {
     position: relative;
-    background: rgba(192,232,70,0.8);
     display:none;
     color:#fff;
     text-decoration: none;
-    font-size: 28px;
+    font-size: 26px;
     font-weight:bold;
-    padding:8px 12px;
+    padding:0;
+    width:340px;
+}
+
+.buynow {
+    background: rgba(25,123,48,0.8);
+}
+
+.buynow:hover {
+    background: rgba(25,123,48,.9);
 }
 
 .booknow {
-    background: rgba(122,222,222,0.8);
-    font-size:20px;
+    background: rgba(0,83,148,0.8);
+}
+
+.booknow:hover {
+    background: rgba(0,83,148,0.9);    
 }
 
 .large .buynow, .large .booknow{
@@ -228,12 +240,21 @@ body * {
 }
 
 .buynow {
-    margin-top:70px;
 }
 
 .buynow a:visited, .booknow a:visited{
     color: #fff;
     text-decoration: none;
+}
+
+.bottom-details {
+    display:none;
+    position:absolute;
+    bottom:0;
+}
+
+.large .bottom-details {
+    display:block;
 }
 
 .footer {
@@ -265,4 +286,42 @@ body * {
     line-height:3em;
     color:#444;
     text-decoration:none;
+}
+
+.per-night {
+    font-size:18px;
+    color:#ddd;
+    font-weight:bold;
+}
+
+.sexy-description {
+    width:316px;
+    background-color:rgba(0,0,0,.7);
+    color:#fff;
+    padding:12px;
+    font-size:22px;
+    font-weight:bold;
+    line-height:1.15em;
+    font-weight:normal;
+}
+
+.sexy-price {
+    font-size:28px;
+    font-weight:bold;
+    margin-right:3px;
+}
+
+.lefter {
+    display:inline-block;
+    padding:4px 12px;
+}
+
+.righter {
+    width:160px;
+    position:absolute;
+    right:0;
+    display:inline-block;
+    text-align:center;
+    background-color:rgba(0,0,0,.2);
+    padding:4px 12px;
 }
