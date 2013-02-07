@@ -92,8 +92,22 @@
                   </div>
                   ${{price}}
                 </div>
-        				<a class="buynow buybutton" href="{{buynowhref}}" target="_blank">Book Flight Now!</a><div style="clear:both"></div>
-                <a class="booknow buybutton" href="{{booknowhref}}" target="_blank">Check lodging</a>
+                <div class="bottom-details">
+          				<a class="buynow buybutton" href="{{buynowhref}}" target="_blank">
+                    <div class="lefter">${{price}}</div>
+                    <div class="righter">Book Flight</div>
+                  </a>
+                  <div style="clear:both"></div>
+                  <a class="booknow buybutton" href="{{booknowhref}}" target="_blank">
+                    <div class="lefter">
+                      ${{hotel_price}}<span class="per-night">/night</span>
+                    </div>
+                    <div class="righter">Book Hotel</div>
+                  </a>
+                  <div class="sexy-description">
+                    <span class="sexy-price">${{total_price}}</span> {{trip_length}} in {{destination}} leaving {{leaving}} 
+                  </div>
+                </div>
             </div>
           </div>
         </div>
