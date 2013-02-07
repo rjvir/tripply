@@ -86,7 +86,7 @@ $.extend(TRIP, {
 				price: flight.get("price"),
 				old_price: parseInt(randFact*flight.get("price")),
 				buynowhref: flight.get("link"),
-				booknowhref: 'https://www.airbnb.com/s/'+flight.get("destLocation").replace('/', ' ')+'?checkin='+flight.get("departDate")+'&checkout='+flight.get("returnDate")
+				booknowhref: flight.get("hotel_link")
 			})
 			$('.deal-box').first().addClass('large');
 			$('.deals-container').isotope('insert', $(html));
