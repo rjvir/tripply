@@ -182,7 +182,7 @@ foreach($airports as $airport){
 			}
 		}
 		
-		$rss[$key]['hotel_price'] =	$minPrice + ; 
+		$rss[$key]['hotel_price'] =	$minPrice; 
 		$rss[$key]['hotel_link'] = "http://www.expedia.com/Hotel-Search#destination=".$deal['destLocation']."&startDate=".$depart->format('m/d/Y')."&endDate=".$return->format('m/d/Y')."&adults=1&star=0&sort=price";
 		$rss[$key]['link'] = "http://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from:".$deal['originCode'].",to:".$deal['destCode'].",departure:".$depart->format('m/d/Y')."TANYT&leg2=from:".$deal['destCode'].",to:".$deal['originCode'].",departure:".$return->format('m/d/Y')."TANYT&passengers=children:0,adults:1,seniors:0,infantinlap:Y&options=cabinclass:coach,nopenalty:N,sortby:price&mode=search";
 
