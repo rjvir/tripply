@@ -163,7 +163,9 @@ foreach($airports as $airport){
 		//Convert dates to DateTime object to make formatting easier.
 		$depart = new DateTime('20'.$depart[2].'-'.$depart[0]."-".$depart[1]);
 		$return = new DateTime('20'.$return[2].'-'.$return[0]."-".$return[1]);
-		$rss[$key]['link'] = "http://www.kayak.com/flights#/".$deal['originCode']."-".$deal['destCode']."/".$depart->format('Y-m-d')."/".$return->format('Y-m-d');
+		// $rss[$key]['link'] = "http://www.kayak.com/flights#/".$deal['originCode']."-".$deal['destCode']."/".$depart->format('Y-m-d')."/".$return->format('Y-m-d');
+		$rss[$key]['link'] = "http://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from:".$deal['originCode'].",to:".$deal['destCode'].",departure:".$depart->format('m/d/Y')."TANYT&leg2=from:".$deal['destCode'].",to:".$deal['originCode'].",departure:".$return->format('m/d/Y')."TANYT&passengers=children:0,adults:1,seniors:0,infantinlap:Y&options=cabinclass:coach,nopenalty:N,sortby:price&mode=search";
+
 	}
 	
 	//Setup object to be batch posted to parse.com
