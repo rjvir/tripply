@@ -168,10 +168,17 @@ foreach($airports as $airport){
 		$hotel_query_url = "http://api.ean.com/ean-services/rs/hotel/v3/list?cid=55505&minorRev=16&apiKey=bynsqz35cd6qjr9yncw7njb6&locale=en_US&currencyCode=USD&";
 		$hotel_query_url .= "xml=<HotelListRequest><arrivalDate>".$depart->format('m/d/Y')."</arrivalDate><departureDate>".$return->format('m/d/Y')."</departureDate><RoomGroup><Room><numberOfAdults>1</numberOfAdults></Room></RoomGroup>";
 		$hotel_query_url .= "<city>".str_replace(" ", "", $location[0])."</city><stateProvinceCode>".str_replace(" ", "", $location[1])."</stateProvinceCode><numberOfResults>20</numberOfResults></HotelListRequest>";
-		$hotelData = file_get_contents($hotel_query_url);
-
-		$rss[$key]['hotel_link'] = 
-		$rss[$key]['hotel_price'] = 
+		$hotelData = json_decode(file_get_contents($hotel_query_url), true);
+		$hotelData = $hotelData['HotelListResponse']['HotelList']['HotelSummary'];
+		$minPrice = $hotelData[0]['lowRate'];
+		foreach($hotelData as $hotel_deal) {
+			$thisPrice = $hotel_deal['lowRate'];
+			if ($thisPrice < $minPrice) {
+				$minPrice = $thisPrice;
+			}
+		}
+		$rss[$key]['hotel_link'] = "http://www.expedia.com/Hotel-Search#destination=".$deal['destLocation']."&startDate=".$depart->format('m/d/Y')."&endDate=".$return->format('m/d/Y')."&adults=1&star=0";
+		$rss[$key]['hotel_price'] =	$minPrice; 
 		$rss[$key]['link'] = "http://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from:".$deal['originCode'].",to:".$deal['destCode'].",departure:".$depart->format('m/d/Y')."TANYT&leg2=from:".$deal['destCode'].",to:".$deal['originCode'].",departure:".$return->format('m/d/Y')."TANYT&passengers=children:0,adults:1,seniors:0,infantinlap:Y&options=cabinclass:coach,nopenalty:N,sortby:price&mode=search";
 
 	}
