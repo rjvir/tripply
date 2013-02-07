@@ -135,7 +135,7 @@ foreach($airports as $airport){
 		$temp[] = $rss[$key];
 	}
 	$rss = $temp;
-	array_splice($rss, 12);
+	array_splice($rss, 9);
 	//Check if the deal's destination has an image url stored in Parse.
 	//If not then find an image using Yahoo.
 	foreach($rss as $key=>$deal){
