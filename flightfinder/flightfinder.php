@@ -164,6 +164,17 @@ foreach($airports as $airport){
 		$depart = new DateTime('20'.$depart[2].'-'.$depart[0]."-".$depart[1]);
 		$return = new DateTime('20'.$return[2].'-'.$return[0]."-".$return[1]);
 		// $rss[$key]['link'] = "http://www.kayak.com/flights#/".$deal['originCode']."-".$deal['destCode']."/".$depart->format('Y-m-d')."/".$return->format('Y-m-d');
+
+		$hotel_query_url = "http://api.ean.com/ean-services/rs/hotel/v3/list?cid=55505&minorRev=16&apiKey=bynsqz35cd6qjr9yncw7njb6&locale=en_US&currencyCode=USD";
+		$hotel_query_url.="&xml=<HotelListRequest><arrivalDate>".$depart->format('m/d/20Y')."</arrivalDate><departureDate>".$return->format('m/d/Y')."</departureDate><RoomGroup><Room><numberOfAdults>1</numberOfAdults></Room></RoomGroup>";
+		$hotel_query_url.="<city>".explode(',', $deal[destLocation])[0]."</city><stateProvinceCode>".explode(',', $deal[destLocation])[1]."</stateProvinceCode><numberOfResults>20</numberOfResults></HotelListRequest>"
+
+		prettyprint(xmlToArray($hotel_query_url));
+		die();
+
+
+		$rss[$key]['hotel_link'] = 
+		$rss[$key]['hotel_price'] = 
 		$rss[$key]['link'] = "http://www.expedia.com/Flights-Search?trip=roundtrip&leg1=from:".$deal['originCode'].",to:".$deal['destCode'].",departure:".$depart->format('m/d/Y')."TANYT&leg2=from:".$deal['destCode'].",to:".$deal['originCode'].",departure:".$return->format('m/d/Y')."TANYT&passengers=children:0,adults:1,seniors:0,infantinlap:Y&options=cabinclass:coach,nopenalty:N,sortby:price&mode=search";
 
 	}
@@ -210,7 +221,6 @@ foreach($airports as $airport){
 	if(curl_exec($ch)) curl_close($ch);
 	else die(curl_error($ch));
 }
-
 //Print runtime for the Post section.
 echo "Objects Posted In: ";
 echo time()-$postTime;
