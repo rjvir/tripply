@@ -78,9 +78,10 @@ $.extend(TRIP, {
 			numNights = returnDate.diff(startDate,'days'),
 			dafact = ((Math.random() * 1.2) + 1.4),
 			flightPrice = parseInt(flight.get("price")),
-			hotelPrice = flight.get("hotel_price"),
-			totalPrice = (hotelPrice * numNights) + flightPrice;
-
+			hotelPrice = flight.get("hotel_price");
+			if (hotelPrice == null) hotelPrice = 75; 
+			
+			var totalPrice = (hotelPrice * numNights) + flightPrice;
 		  	var html = deal_template({
 				destination: TRIP.locationString(flight.get("destLocation")), 
 				bg: imgUrl,
