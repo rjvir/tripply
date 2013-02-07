@@ -124,7 +124,7 @@ foreach($airports as $airport){
 		$tomorrow = new DateTime('tomorrow');	//Get tomorrow's date.
 		$interval = $datetime1->diff($datetime2, true);		//Find the difference between 2 days
 		//Push deals to temp array if they meet criteria.
-		if(!in_array($key,$tempkeys) && ($interval->format('%a') < 11) && ($datetime1 > $tomorrow)){
+		if(!in_array($key,$tempkeys) && ($interval->format('%a') < 11) && ($interval->format('%a') > 1) && ($datetime1 > $tomorrow)){
 			$tempkeys[] = $key;
 		}
 	}
@@ -164,14 +164,11 @@ foreach($airports as $airport){
 		$depart = new DateTime('20'.$depart[2].'-'.$depart[0]."-".$depart[1]);
 		$return = new DateTime('20'.$return[2].'-'.$return[0]."-".$return[1]);
 		// $rss[$key]['link'] = "http://www.kayak.com/flights#/".$deal['originCode']."-".$deal['destCode']."/".$depart->format('Y-m-d')."/".$return->format('Y-m-d');
-
-		$hotel_query_url = "http://api.ean.com/ean-services/rs/hotel/v3/list?cid=55505&minorRev=16&apiKey=bynsqz35cd6qjr9yncw7njb6&locale=en_US&currencyCode=USD";
-		$hotel_query_url.="&xml=<HotelListRequest><arrivalDate>".$depart->format('m/d/20Y')."</arrivalDate><departureDate>".$return->format('m/d/Y')."</departureDate><RoomGroup><Room><numberOfAdults>1</numberOfAdults></Room></RoomGroup>";
-		$hotel_query_url.="<city>".explode(',', $deal[destLocation])[0]."</city><stateProvinceCode>".explode(',', $deal[destLocation])[1]."</stateProvinceCode><numberOfResults>20</numberOfResults></HotelListRequest>"
-
-		prettyprint(xmlToArray($hotel_query_url));
-		die();
-
+		$location = explode(',', $deal['destLocation']);
+		$hotel_query_url = "http://api.ean.com/ean-services/rs/hotel/v3/list?cid=55505&minorRev=16&apiKey=bynsqz35cd6qjr9yncw7njb6&locale=en_US&currencyCode=USD&";
+		$hotel_query_url .= "xml=<HotelListRequest><arrivalDate>".$depart->format('m/d/Y')."</arrivalDate><departureDate>".$return->format('m/d/Y')."</departureDate><RoomGroup><Room><numberOfAdults>1</numberOfAdults></Room></RoomGroup>";
+		$hotel_query_url .= "<city>".str_replace(" ", "", $location[0])."</city><stateProvinceCode>".str_replace(" ", "", $location[1])."</stateProvinceCode><numberOfResults>20</numberOfResults></HotelListRequest>";
+		$hotelData = file_get_contents($hotel_query_url);
 
 		$rss[$key]['hotel_link'] = 
 		$rss[$key]['hotel_price'] = 
