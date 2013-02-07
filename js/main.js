@@ -73,11 +73,11 @@ $.extend(TRIP, {
       	cityQuery.first({
 		  success: function(result) {
 		  	imgUrl = result.get("imageUrl");
-			var startDate =  moment(flight.get("departDate"), "MM/DD/YY");
+			var startDate =  moment(flight.get("departDate"), "MM/DD/YY"),
 			returnDate = moment(flight.get("returnDate"), "MM/DD/YY"),
 			numNights = returnDate.diff(startDate,'days'),
 			dafact = ((Math.random() * 1.2) + 1.4),
-			flightPrice = flight.get("price"),
+			flightPrice = parseInt(flight.get("price")),
 			hotelPrice = flight.get("hotel_price"),
 			totalPrice = (hotelPrice * numNights) + flightPrice;
 
