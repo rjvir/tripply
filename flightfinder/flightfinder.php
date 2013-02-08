@@ -5,6 +5,9 @@ set_time_limit(0);		//Set infinite time limit so script doesn't time out gatheri
 include_once "oauth/OAuthStore.php";
 include_once "oauth/OAuthRequester.php";
 
+
+$parse_app_id = "DaJkkAOKSFVxqPbI7gyPluuqRWkUgGIgzDzMJhUD";
+$parse_REST_key = "Hy5vzkrQd3U4ksKVjn0yW697KWFCyaOCVznLe9Qo";
 //Function used to print arrays out as JSON strings using PRETTY_PRINT and <pre> tags to make them easy to read.
 function prettyprint($obj){
 	echo "<pre>";
@@ -49,8 +52,8 @@ OAuthStore::instance("2Leg", $options );
 //Initialize curl to REST API URL
 $ch = curl_init("https://api.parse.com/1/classes/Deals?limit=600");
 //Set parse keys into curl headers using array.
-$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
-				"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
+$headers = array("X-Parse-Application-Id: ".parse_app_id,
+				"X-Parse-REST-API-Key: ".parse_REST_key,
 				"Content-type: application/json");
 
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);		//Set Headers
@@ -72,8 +75,8 @@ echo "<br>";
 
 /*******   Get list of cities that already have images    ***************************************/
 $ch = curl_init("https://api.parse.com/1/classes/CityImages?limit=1000");
-$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
-				"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
+$headers = array("X-Parse-Application-Id: ".parse_app_id,
+				"X-Parse-REST-API-Key: ".parse_REST_key,
 				"Content-type: application/json");
 
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -148,7 +151,7 @@ foreach($airports as $airport){
 				//Use Oauth library to set OAuth Keys.
 				$request = new OAuthRequester($url, $method, $params);
 				$result = $request->doRequest();	//Run request.
-				$response = $result['body'];
+				$response = $result['body']; 
 				$response = json_decode($response, true);	//Get response as array object.
 				$airportimagestoadd[] = $deal['destCode'];	//Add destination as an image we just got.
 				//Setup array ready for curl post to parse.com with destination airport code and image URL.
@@ -204,8 +207,8 @@ foreach($airports as $airport){
 	//We are running a batch post to reduce the number of posts we make and speed up script.
 	//We can only run 50 requests per batch so we are doing the requests on an airport basis (max requests will be 12 deals).
 	$ch = curl_init("https://api.parse.com/1/batch");
-	$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
-					"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
+	$headers = array("X-Parse-Application-Id: ".parse_app_id,
+					"X-Parse-REST-API-Key: ".parse_REST_key,
 					"Content-type: application/json");
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -217,8 +220,8 @@ foreach($airports as $airport){
 		
 	//Same thing for new image URLs. Curl POST.
 	$ch = curl_init("https://api.parse.com/1/batch");
-	$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
-					"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
+	$headers = array("X-Parse-Application-Id: ".parse_app_id,
+					"X-Parse-REST-API-Key: ".parse_REST_key,
 					"Content-type: application/json");
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -251,8 +254,8 @@ $delete = array();
 		}
 	}
 	$ch = curl_init("https://api.parse.com/1/batch");
-	$headers = array("X-Parse-Application-Id: mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL",
-					"X-Parse-REST-API-Key: aRzlV8V7nuKE28llMLlX5yjkIF9tGp1NkJrosSQH",
+	$headers = array("X-Parse-Application-Id: ".parse_app_id,
+					"X-Parse-REST-API-Key: ".parse_REST_key,
 					"Content-type: application/json");
 	
 	//set the url, number of POST vars, POST data
