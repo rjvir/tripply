@@ -12,7 +12,7 @@ $('.deals-container').isotope({
   	}
 });	
 
-Parse.initialize("mfn8KBuLDmeUenYE1VGUYQr2x5YDFJQ669TZ7HSL", "nMBVdpIpZ3XjGMBMOygTpC1OXfHtUUd7i5nlXaj3");
+Parse.initialize("DaJkkAOKSFVxqPbI7gyPluuqRWkUgGIgzDzMJhUD", "X2oTRbTAnIRL3VVyI15JcSZJWs8BRqxxijudLJUq");
 var deal_template_source = $('#deal-template').html(),
 	dropdown_template_source = $('#dropdown-item-template').html(),
 	deal_template = Handlebars.compile(deal_template_source),
@@ -91,7 +91,6 @@ $.extend(TRIP, {
 				old_price: parseInt(dafact * flightPrice),
 				hotel_price: Math.round(hotelPrice),
 				total_price: Math.round(totalPrice),
-				// clicks_this_hour: Math.round((Math.random() * 20) + 3),
 				buynowhref: flight.get("link"),
 				booknowhref: flight.get("hotel_link")
 			})
