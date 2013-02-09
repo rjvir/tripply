@@ -91,6 +91,7 @@ $.extend(TRIP, {
 				old_price: parseInt(dafact * flightPrice),
 				hotel_price: Math.round(hotelPrice),
 				total_price: Math.round(totalPrice),
+				clicks_this_hour: Math.round((Math.random() * 20) + 3),
 				buynowhref: flight.get("link"),
 				booknowhref: flight.get("hotel_link")
 			})
