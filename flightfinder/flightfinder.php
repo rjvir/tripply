@@ -139,6 +139,25 @@ foreach($airports as $airport){
 	}
 	$rss = $temp;
 	array_splice($rss, 9);
+	
+	
+	//Flip origin and destination because kayak changed their RSS to screw us over.
+	foreach($rss as $key=>$deal){
+		$origincode = $rss[$key]["originCode"];
+		$originloc = $rss[$key]["originLocation"];
+		$originname = $rss[$key]["originName"];
+		$destcode = $rss[$key]["destCode"];
+		$destloc = $rss[$key]["destLocation"];
+		$destname = $rss[$key]["destName"];
+		
+		$rss[$key]["originCode"] = $destcode;
+		$rss[$key]["originLocation"] = $destloc;
+		$rss[$key]["originName"] = $destname;
+		$rss[$key]["destCode"] = $origincode;
+		$rss[$key]["destLocation"] = $originloc;
+		$rss[$key]["destName"] = $originname;
+	}
+	
 	//Check if the deal's destination has an image url stored in Parse.
 	//If not then find an image using Yahoo.
 	foreach($rss as $key=>$deal){
