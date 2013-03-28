@@ -124,11 +124,12 @@ foreach($airports as $airport){
 	foreach($rss as $key=>$deal){
 		$date1 = explode("/",$deal["departDate"]);	//Turn date into array
 		$date2 = explode("/",$deal["returnDate"]);
-		$datetime1 = new DateTime('20'.$date1[2].'-'.$date1[0]."-".$date1[1]);	//Turn date into DateTime object.
-		$datetime2 = new DateTime('20'.$date2[2].'-'.$date2[0]."-".$date2[1]);
+		$datetime1 = new DateTime($date1[2].'-'.$date1[0].'-'.$date1[1]);	//Turn date into DateTime object.
+		$datetime2 = new DateTime($date2[2].'-'.$date2[0].'-'.$date2[1]);
 		$tomorrow = new DateTime('tomorrow');	//Get tomorrow's date.
 		$interval = $datetime1->diff($datetime2, true);		//Find the difference between 2 days
 		//Push deals to temp array if they meet criteria.
+		
 		if(!in_array($key,$tempkeys) && ($interval->format('%a') < 11) && ($interval->format('%a') > 1) && ($datetime1 > $tomorrow)){
 			$tempkeys[] = $key;
 		}
