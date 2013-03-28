@@ -52,8 +52,8 @@ OAuthStore::instance("2Leg", $options );
 //Initialize curl to REST API URL
 $ch = curl_init("https://api.parse.com/1/classes/Deals?limit=600");
 //Set parse keys into curl headers using array.
-$headers = array("X-Parse-Application-Id: ".parse_app_id,
-				"X-Parse-REST-API-Key: ".parse_REST_key,
+$headers = array("X-Parse-Application-Id: ".$parse_app_id,
+				"X-Parse-REST-API-Key: ".$parse_REST_key,
 				"Content-type: application/json");
 
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);		//Set Headers
@@ -75,8 +75,8 @@ echo "<br>";
 
 /*******   Get list of cities that already have images    ***************************************/
 $ch = curl_init("https://api.parse.com/1/classes/CityImages?limit=1000");
-$headers = array("X-Parse-Application-Id: ".parse_app_id,
-				"X-Parse-REST-API-Key: ".parse_REST_key,
+$headers = array("X-Parse-Application-Id: ".$parse_app_id,
+				"X-Parse-REST-API-Key: ".$parse_REST_key,
 				"Content-type: application/json");
 
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -139,6 +139,25 @@ foreach($airports as $airport){
 	}
 	$rss = $temp;
 	array_splice($rss, 9);
+	
+	
+	//Flip origin and destination because kayak changed their RSS to screw us over.
+	foreach($rss as $key=>$deal){
+		$origincode = $rss[$key]["originCode"];
+		$originloc = $rss[$key]["originLocation"];
+		$originname = $rss[$key]["originName"];
+		$destcode = $rss[$key]["destCode"];
+		$destloc = $rss[$key]["destLocation"];
+		$destname = $rss[$key]["destName"];
+		
+		$rss[$key]["originCode"] = $destcode;
+		$rss[$key]["originLocation"] = $destloc;
+		$rss[$key]["originName"] = $destname;
+		$rss[$key]["destCode"] = $origincode;
+		$rss[$key]["destLocation"] = $originloc;
+		$rss[$key]["destName"] = $originname;
+	}
+	
 	//Check if the deal's destination has an image url stored in Parse.
 	//If not then find an image using Yahoo.
 	foreach($rss as $key=>$deal){
@@ -207,8 +226,8 @@ foreach($airports as $airport){
 	//We are running a batch post to reduce the number of posts we make and speed up script.
 	//We can only run 50 requests per batch so we are doing the requests on an airport basis (max requests will be 12 deals).
 	$ch = curl_init("https://api.parse.com/1/batch");
-	$headers = array("X-Parse-Application-Id: ".parse_app_id,
-					"X-Parse-REST-API-Key: ".parse_REST_key,
+	$headers = array("X-Parse-Application-Id: ".$parse_app_id,
+					"X-Parse-REST-API-Key: ".$parse_REST_key,
 					"Content-type: application/json");
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -220,8 +239,8 @@ foreach($airports as $airport){
 		
 	//Same thing for new image URLs. Curl POST.
 	$ch = curl_init("https://api.parse.com/1/batch");
-	$headers = array("X-Parse-Application-Id: ".parse_app_id,
-					"X-Parse-REST-API-Key: ".parse_REST_key,
+	$headers = array("X-Parse-Application-Id: ".$parse_app_id,
+					"X-Parse-REST-API-Key: ".$parse_REST_key,
 					"Content-type: application/json");
 	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -254,8 +273,8 @@ $delete = array();
 		}
 	}
 	$ch = curl_init("https://api.parse.com/1/batch");
-	$headers = array("X-Parse-Application-Id: ".parse_app_id,
-					"X-Parse-REST-API-Key: ".parse_REST_key,
+	$headers = array("X-Parse-Application-Id: ".$parse_app_id,
+					"X-Parse-REST-API-Key: ".$parse_REST_key,
 					"Content-type: application/json");
 	
 	//set the url, number of POST vars, POST data
