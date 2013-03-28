@@ -3,6 +3,8 @@
 
 $(document).ready(function(){
 
+$(window).politeWarning(8);
+
 $('.deals-container').isotope({
   // options
   	itemSelector : '.deal-box',
