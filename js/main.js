@@ -3,7 +3,7 @@
 
 $(document).ready(function(){
 
-$(window).politeWarning(8);
+$(window).politeWarning(10);
 
 $('.deals-container').isotope({
   // options
