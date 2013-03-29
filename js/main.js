@@ -75,8 +75,8 @@ $.extend(TRIP, {
       	cityQuery.first({
 		  success: function(result) {
 		  	imgUrl = result.get("imageUrl");
-			var startDate =  moment(flight.get("departDate"), "MM/DD/YY"),
-			returnDate = moment(flight.get("returnDate"), "MM/DD/YY"),
+			var startDate =  moment(flight.get("departDate"), "MM/DD/YYYY"),
+			returnDate = moment(flight.get("returnDate"), "MM/DD/YYYY"),
 			numNights = returnDate.diff(startDate,'days'),
 			dafact = ((Math.random() * 1.2) + 1.4),
 			flightPrice = parseInt(flight.get("price")),
