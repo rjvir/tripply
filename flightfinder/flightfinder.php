@@ -36,8 +36,8 @@ function date_compare($a, $b){
     $b = $b['departDate'];
     $a = explode("/", $a);
     $b = explode("/", $b);
-	$a = new DateTime('20'.$a[2].'-'.$a[0]."-".$a[1]);
-	$b = new DateTime('20'.$b[2].'-'.$b[0]."-".$b[1]);
+	$a = new DateTime($a[2].'-'.$a[0]."-".$a[1]);
+	$b = new DateTime($b[2].'-'.$b[0]."-".$b[1]);
     return ($a > $b);
 }
 
