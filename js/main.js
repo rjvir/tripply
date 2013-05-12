@@ -51,7 +51,12 @@ $.extend(TRIP, {
 	},
 	setLocale: function() {
 		var param = TRIP.getURLParameter("origin");
-		if (param != 'null') TRIP.user_airport = param.substring(0, param.length - 1);;
+		if (param != 'null') {
+			TRIP.user_airport = param.substring(0, param.length - 1);
+		} else if ($.cookie('user_airport') != null) {
+			TRIP.user_airport = $.cookie('user_airport');	
+		}
+		$.cookie('user_airport', TRIP.user_airport, { expires: 365 });
 		var Cities = Parse.Object.extend("Cities"),
 		city = new Cities();
 		query = new Parse.Query(Cities);
