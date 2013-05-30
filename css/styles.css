@@ -11,6 +11,7 @@ body * {
 }
 
 .container {
+    position: relative;
     width:960px;
     margin:0 auto;
 }
@@ -80,7 +81,7 @@ body * {
     cursor:pointer;
     display:inline-block;
     width: auto;
-
+    border-color: rgba(0,0,0,.1);
 }
 
 #dropdown-cities ul {
