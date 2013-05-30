@@ -9,8 +9,10 @@
   <meta name="viewport" content="width=device-width"> 
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="http://umich.marketloco.com/static/css/font-awesome.css" />
+  <link rel="stylesheet" href="css/tipuedrop.css" >
   <link type="text/css" rel="stylesheet" href="css/dropdown-menu.css" />
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <link href="http://fonts.googleapis.com/css?family=Lato:300|Open+Sans" rel="stylesheet">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
   <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.1.16.min.js"></script>
   <script type="text/javascript" src="js/dropdown.js"></script>
   <script type="text/javascript" src="//use.typekit.net/tfv4xex.js"></script>
@@ -21,6 +23,7 @@
   <script type="text/javascript" src="js/isotope.js"></script>
   <script type="text/javascript" src="js/polite.min.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/tipuedrop.js"></script>
   <script type="text/javascript">
 
     var _gaq = _gaq || [];
@@ -56,7 +59,7 @@
         <div style="clear:both"></div>
         <div class="from_where">
           Getaway Deals From 
-          <div id="dropdown-cities" class="dropdown-menu has-tip">
+          <!-- <div id="dropdown-cities" class="dropdown-menu has-tip">
             <script id="dropdown-item-template" type="text/x-handlebars-template">
                 <li>
                   <a href="?origin={{airport_code}}/">
@@ -69,13 +72,17 @@
             <ul>
               
             </ul>
-          </div>
-          <span id="dropdown-button" data-dropdown="#dropdown-cities" class="drop-down"><i class="icon-caret-down"></i></span>
+          </div> -->
+          <input type="text" id="city_input" class="drop-down" name="q" autocomplete="off">
+
+        <!-- <span id="dropdown-button" data-dropdown="#dropdown-cities" class="drop-down"><i class="icon-caret-down"></i></span> -->
         </div>
       </div>
     </div>
   </div>
   <div class="container">
+    <div id="tipue_drop_content"></div>
+
     <div id="isotope_div" class="deals">
       <script id="deal-template" type="text/x-handlebars-template">
         <div class="deal-box">
@@ -113,7 +120,7 @@
         </div>
       </script>
       <div class="deals-container">
-  
+
       </div>
     </div>
   </div>
@@ -142,5 +149,6 @@
       Created at MHacks by <a href="http://rjvir.com" target="_blank">Raj Vir</a>, <a href="http://jessedaugherty.com" target="_blank">Jesse Daugherty</a>, <a href="http://kabra.com" target="_blank">Pratik Kabra</a> and <a href="http://www.linkedin.com/pub/jamie-sookprasong/45/4b7/483/" target="_blank">Jamie Sookprasong</a> <!-- -->
     </div>
   </div>
+
 </body>
 </html>
