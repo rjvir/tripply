@@ -60,6 +60,7 @@ $.extend(TRIP, {
 		var Cities = Parse.Object.extend("Cities"),
 		city = new Cities();
 		query = new Parse.Query(Cities);
+		query.equalTo("active",true);
 		query.equalTo("airport_code", TRIP.user_airport);
 		query.find({
 			success: function(results) {
@@ -67,7 +68,7 @@ $.extend(TRIP, {
 					$('#dropdown-button').prepend(results[0].get("city") + ", " + results[0].get("state") + " (" + results[0].get("airport_code") + ") ");
 			},
 			error: function(results) {
-			    alert("Error: " + error.code + " " + error.message);
+			    alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
 			}
 		})
 	},
@@ -117,7 +118,7 @@ $.extend(TRIP, {
 
 		  },
 		  error: function(error) {
-		    alert("Error: " + error.code + " " + error.message);
+		    alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
 		  }
 		});
 
@@ -144,20 +145,31 @@ $.extend(TRIP, {
 
 		  },
 		  error: function(error) {
-		    alert("Error: " + error.code + " " + error.message);
+		    alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
 		  }
 		});
 	},	
 	getCities: function() {		
-  		origin_cities.sort(function(a,b) {return (a.city < b.city) ? -1 : 1;})
-  		$.each(origin_cities, function() {
-			var html = dropdown_item_template({
-				airport_code: this.airport_code, 
-				city: this.city,
-				state: this.state
-			});
-			$("#dropdown-cities ul").append(html);
-		});
+  		var Cities = Parse.Object.extend("Cities"),
+		city = new Cities();
+		query = new Parse.Query(Cities);
+		query.equalTo("active",true);
+		query.ascending("city");
+		query.find({
+			success: function(origin_cities) {
+		  		$.each(origin_cities, function() {
+					var html = dropdown_item_template({
+						airport_code: this.get("airport_code"), 
+						city: this.get("city"),
+						state: this.get("state")
+					});
+					$("#dropdown-cities ul").append(html);
+				});
+		  	},
+		    error: function(error) {
+		    	alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
+		  	}
+	    });
 	}
 });
  TRIP.setLocale();
