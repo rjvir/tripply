@@ -218,7 +218,7 @@ input.focus(function() {
       var set = $.extend( {
       
            'show'                   : 5,
-           'speed'                  : 200,
+           'speed'                  : 100,
            'newWindow'              : false,
            'mode'                   : 'static',
            'contentLocation'        : 'searchdrop/searchdrop_content.json'
