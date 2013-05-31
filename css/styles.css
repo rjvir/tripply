@@ -29,6 +29,7 @@ body * {
     background-size:cover;
     background-position:center center;
     height:260px;
+    width: 100%;
 }
 
 .header {
