@@ -1,0 +1,106 @@
+
+/*
+search drop 2.0.1
+Copyright (c) 2013 search
+search drop is released under the MIT License
+http://www.search.com/drop
+*/
+
+
+/*#search_drop_input
+{
+     font: 12px/19px 'open sans', sans-serif;
+	color: #333;
+	padding: 7px 7px 7px 30px;
+	width: 150px;
+	border: 1px solid #d3d3d3;
+	border-radius: 2px;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	outline: none;
+	background: #fff url('search.gif') no-repeat 10px 11px;
+}*/
+/*#search_drop_input:focus
+{
+     border-color: #c3c3c3;
+     -moz-box-shadow: 0 0 3px rgba(0,0,0,.2);
+     -webkit-box-shadow: 0 0 3px rgba(0,0,0,.2);
+     box-shadow: 0 0 3px rgba(0,0,0,.2); 
+}*/
+#search_drop_content
+{
+     display: none;
+     position: absolute;
+     max-width: 300px;
+     min-width: 200px;
+     margin-top: 5px;
+	border-radius: 5px;
+     -moz-border-radius:5px;
+     -webkit-border-radius:5px;
+     box-shadow: 4px 4px 10px rgba(0,0,0,.5);
+     background: #444;
+     left: 226px;
+     z-index: 99999;
+     top: -80px;
+}
+.search_item_wrap
+{
+     margin: 0px 0;
+     height:100px;
+}
+
+.search_item_wrap:first-child {
+     -webkit-border-top-left-radius: 5px;
+     -webkit-border-top-right-radius: 5px;
+     -moz-border-radius-topleft: 5px;
+     -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+.search_drop_item{
+     background-color: rgba(0,0,0,.5);
+     width:100%; 
+     height:100%;
+     -webkit-border-top-left-radius: 5px;
+     -webkit-border-top-right-radius: 5px;
+     -moz-border-radius-topleft: 5px;
+     -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+.search_drop_item:hover
+{
+     background-color: rgba(0,0,0,.2);
+}
+
+.search_drop_item_content
+{
+     max-width:280px;
+     padding: 7px 10px 0 10px;
+}
+.search_drop_item_content_title
+{
+     font: 48px/1 'open sans', sans-serif;
+     color: #eee;
+     font-weight: bold;
+}
+.search_drop_item_content_text
+{
+     font: 300 18px/1.5 lato, sans-serif;
+     color: #FFF;
+     padding-top: 6px;
+     overflow: hidden;
+}
+.search_drop_no_items
+{
+     font: 13px/1.6 'open sans', sans-serif;
+	color: #ddd;
+     padding: 13px 15px;
+}
+
+.search_drop_no_items a
+{
+     color:#bbb;
+}

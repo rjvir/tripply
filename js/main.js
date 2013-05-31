@@ -176,7 +176,7 @@ $.extend(TRIP, {
 				})
 				window.td.pages = blahBlah;
 				if (!window.addedBLAH) {
-					$('#city_input').tipuedrop();
+					$('#city_input').searchdrop();
 					window.addedBLAH = true
 				}
 		  		$.each(origin_cities, function() {
@@ -212,7 +212,7 @@ input.focus(function() {
          el.val(el.attr('title'));
 });
 
- $.fn.tipuedrop = function(options) {
+ $.fn.searchdrop = function(options) {
 
       var set = $.extend( {
       
@@ -220,13 +220,13 @@ input.focus(function() {
            'speed'                  : 10,
            'newWindow'              : false,
            'mode'                   : 'static',
-           'contentLocation'        : 'tipuedrop/tipuedrop_content.json'
+           'contentLocation'        : 'searchdrop/searchdrop_content.json'
       
       }, options);
       
       return this.each(function() {
       
-           var tipuedrop_in = {
+           var searchdrop_in = {
                 pages: []
            };
            $.ajaxSetup({
@@ -235,51 +235,51 @@ input.focus(function() {
                           
            if (set.mode == 'static')
            {
-                tipuedrop_in = $.extend({}, window.td);
+                searchdrop_in = $.extend({}, window.td);
                 var i = 0;
            }
 
            $(this).keyup(function(event)
            {
-                getTipuedrop($(this));
+                getsearchdrop($(this));
            });               
            
-           function getTipuedrop($obj)
+           function getsearchdrop($obj)
            {
                 if ($obj.val())
                 {
                      var out = '';
                      var c = 0;
-                     for (var i = 0; i < tipuedrop_in.pages.length; i++)
+                     for (var i = 0; i < searchdrop_in.pages.length; i++)
                      {
                           var pat = new RegExp($obj.val(), 'i');
-                          if ((tipuedrop_in.pages[i].title.search(pat) != -1 || tipuedrop_in.pages[i].text.search(pat) != -1 || tipuedrop_in.pages[i].tags.search(pat) != -1) && c < set.show)
+                          if ((searchdrop_in.pages[i].title.search(pat) != -1 || searchdrop_in.pages[i].text.search(pat) != -1 || searchdrop_in.pages[i].tags.search(pat) != -1) && c < set.show)
                           {
-                               out += '<a href="' + tipuedrop_in.pages[i].loc + '"';
+                               out += '<a style="text-decoration:none;" href="' + searchdrop_in.pages[i].loc + '"';
                                if (set.newWindow)
                                {
                                     out += ' target="_blank"';
                                }
-                               out += '><div class="tipue_drop_item"><div class="tipue_drop_left"><img src="' + tipuedrop_in.pages[i].thumb + '" class="tipue_drop_image"></div><div class="tipue_drop_right"><div class="tipue_drop_right_title">' + tipuedrop_in.pages[i].title + '</div><div class="tipue_drop_right_text">' + tipuedrop_in.pages[i].text + '</div></div><div style="clear: both;"></div></div></a>';
+                               out += '><div style="background: url(' + searchdrop_in.pages[i].thumb + ');background-size:cover;" class="search_item_wrap"><div class="search_drop_item"><div class="search_drop_item_content"><div class="search_drop_item_content_title">' + searchdrop_in.pages[i].title + '</div><div class="search_drop_item_content_text">' + searchdrop_in.pages[i].text + '</div></div></div></div></a>';
                                c++;
                           }
                      }
                      if (c == 0)
                      {
-                          out += '<div class="tipue_drop_no_items">Origin city not found. <a href="mailto:nowcation@umich.edu">Contact us</a> to add it.</div>';     
+                          out += '<div class="search_drop_no_items">Origin city not found. <a href="mailto:nowcation@umich.edu">Contact us</a> to add it.</div>';     
                      }
                                     
-                     $('#tipue_drop_content').html(out);
-                     $('#tipue_drop_content').fadeIn(set.speed);
+                     $('#search_drop_content').html(out);
+                     $('#search_drop_content').fadeIn(set.speed);
                 }
                 else
                 {
-                     $('#tipue_drop_content').fadeOut(set.speed);     
+                     $('#search_drop_content').fadeOut(set.speed);     
                 }
            }
            
            $('html').click(function() {
-                $('#tipue_drop_content').fadeOut(set.speed);
+                $('#search_drop_content').fadeOut(set.speed);
            });
       
       });
