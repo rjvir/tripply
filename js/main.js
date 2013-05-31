@@ -72,7 +72,7 @@ $.extend(TRIP, {
 			},
 			error: function(results) {
 			    alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
-			    throw "stop execution";
+
 			}
 		})
 	},
@@ -123,7 +123,6 @@ $.extend(TRIP, {
 		  },
 		  error: function(error) {
 		    alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
-		    throw "stop execution";
 		  }
 		});
 
@@ -151,7 +150,6 @@ $.extend(TRIP, {
 		  },
 		  error: function(error) {
 		    alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
-		    throw "stop execution";
 		  }
 		});
 	},	
@@ -193,7 +191,6 @@ $.extend(TRIP, {
 		  	},
 		    error: function(error) {
 		    	alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
-		    	throw "stop execution";
 		  	}
 	    });
 	}
@@ -221,7 +218,7 @@ input.focus(function() {
       var set = $.extend( {
       
            'show'                   : 5,
-           'speed'                  : 10,
+           'speed'                  : 200,
            'newWindow'              : false,
            'mode'                   : 'static',
            'contentLocation'        : 'searchdrop/searchdrop_content.json'
