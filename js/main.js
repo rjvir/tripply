@@ -72,6 +72,7 @@ $.extend(TRIP, {
 			},
 			error: function(results) {
 			    alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
+			    throw "stop execution";
 			}
 		})
 	},
@@ -122,6 +123,7 @@ $.extend(TRIP, {
 		  },
 		  error: function(error) {
 		    alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
+		    throw "stop execution";
 		  }
 		});
 
@@ -149,6 +151,7 @@ $.extend(TRIP, {
 		  },
 		  error: function(error) {
 		    alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
+		    throw "stop execution";
 		  }
 		});
 	},	
@@ -190,6 +193,7 @@ $.extend(TRIP, {
 		  	},
 		    error: function(error) {
 		    	alert("Oops! Something went wrong. The site may be experiencing some issues. Please refresh or visit again later.");
+		    	throw "stop execution";
 		  	}
 	    });
 	}
